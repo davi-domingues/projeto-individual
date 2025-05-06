@@ -1,0 +1,5 @@
+Fundo do site 	#F5F0E6 (Bege Claro)
+Cards / Boxes	#ECE2D0 (Creme Suave)
+Títulos e textos	#3E3A36 (Marrom Escuro)
+Links / Botões	#A67C52 (Caramelo)
+Menu lateral/topo	#D6C4A8 (Marrom Claro)
