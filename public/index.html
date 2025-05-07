@@ -11,9 +11,14 @@
     <link rel="stylesheet" href="../public/css/style.css">
 </head>
 
-<body>
+<body class="index">
+
     <header class="header flex">
-        <h1 class="logo">{Ler&Saber}</h1>
+        <a href="index.html" class="logo flex">
+            <span class="logo-key">{</span>
+            <span class="logo-text">Ler&Saber</span>
+            <span class="logo-key">}</span>
+        </a>
         <nav class="navbar flex">
             <a href="#habito">O Hábito</a>
             <p>♦</p>
@@ -23,18 +28,34 @@
             <p>♦</p>
             <a href="#ferramentas">Ferramentas</a>
         </nav>
-        <button class="login-button">Login</button>
+        <div class="button-container">
+            <button id="login-button">
+                <a href="login.html">Login</a>
+            </button>
+        </div>
     </header>
-    <section class="section" id="home">
-        <video autoplay muted loop class="banner" id="home-video">
+
+    <section class="section flex" id="home">
+        <div class="quote-container">
+            <p class="quote-text">"A leitura é o caminho mais curto para o conhecimento."</p>
+            <p class="quote-autor">~ Aristóteles </p>
+        </div>
+        <div class="button-container">
+            <button id="cadastro-button">
+                <a href="cadastro.html">Comece sua jornada de leitura agora!</a>
+            </button>
+        </div>
+        <!-- <video autoplay muted loop class="banner" id="home-video">
             <source src="https://www.youtube.com/watch?v=YeQHwX7BTEw" type="video/mp4">
-        </video>
+        </video> -->
         <!-- <img src="../public/assets/bckg-home.png" alt="" class="banner"> -->
     </section>
+
     <section class="section" id="habito"></section>
     <section class="section" id="beneficios"></section>
     <section class="section" id="sobre"></section>
     <section class="section" id="ferramentas"></section>
+
     <footer class="footer"></footer>
 </body>
 

@@ -9,6 +9,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
 }
 
 h1, h2, h3{
@@ -17,10 +18,35 @@ h1, h2, h3{
     font-style: normal;
 }
 
+.flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .logo {
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style:normal;
+    font-weight: bold;
+    text-decoration: none;
     color: #2e1f17;
     text-align: center;
-    height: 100%;
+    height: fit-content;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo .logo-key {
+    font-size: 30.3px;
+}
+
+.logo .logo-text {
+    font-size: 27.3px;
 }
 
 .section {
@@ -41,13 +67,6 @@ h1, h2, h3{
     height: 100%;
 }
 
-.flex {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-
 .navbar {
     width: 30%;
 }
@@ -55,7 +74,7 @@ h1, h2, h3{
 .navbar, .navbar a {
     height: fit-content;
     color: #2e1f17;
-    font-size: medium;
+    font-size: 16.3px;
 }
 
 .navbar a {
@@ -68,19 +87,142 @@ h1, h2, h3{
     text-decoration: underline;
 }
 
-.login-button{
+.button-container button{
     background-color: #a67c52;
     border: none;
-    border-radius: 80px;
-    height: 30px;
-    width: 60px;
+    border-radius: 200px;
+    height: fit-content;
+    width: fit-content;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 17px;
+    transition: 0.3s;
+    padding: 5px 20px;
+    color: #2e1f17;
+    a{
+        color: #2e1f17;
+        text-decoration: none;
+        list-style: none;
+    }
+}
+
+.button-container button:hover {
+    padding: 6px 24px;
     transition: 0.3s;
 }
 
-.login-button:hover {
-    height: calc(30px + 1%);
-    width: calc(60px + 1%);
+#cadastro-button {
+    position: relative;
+    top: 200%;
 }
+
+#home{
+    background-image: url("../assets/bckg-home.png");
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.quote-container {
+    width: 50%;
+    height: 50%;
+}
+
+.quote-text, .quote-autor {
+    color: white;
+    font-family: "Playfair Display", serif;
+    font-weight: bold;
+}
+
+.quote-text {
+    font-size: 46.6px;
+    text-align: center;
+}
+
+.quote-autor {
+    font-size: 28px;
+    text-align: right;
+}
+
+.login, .cadastro{
+    color: #a67c52;
+    .section {
+        background-image: url("../assets/image.png");
+        background-color: white;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .header {
+        justify-content: left;
+        background-color: transparent;
+    };
+    .logo {
+        margin-left: 5%;
+        color: #a67c52;
+    };
+    h1 {
+        font-style: italic;
+        font-size: 33px;
+        margin: 0
+    };
+    main {
+        background-color: #ece2d0;
+        height: 70%;
+        width: 30%;
+        border-radius: 20px;
+        padding: 5px;
+    };
+    .redirect {
+        font-size: 11.6px;
+        span {
+            color: #3e3a36;
+        };
+        a {
+            color: blue
+        };
+    };
+    .forms {
+        width: 55%;
+    }
+    input {
+        border: 1px solid #a67c52;
+        border-radius: 100px;
+        background-color: transparent;
+        text-align: center;
+        padding: 2% 20%;
+    };
+    input:focus {
+        outline: none;
+    }
+    input::placeholder {
+        color:#a67c52;
+        font-size: 10.3px;
+        font-weight: bold;
+        font-style: italic;
+    }
+    .container {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        label {
+            align-self: flex-start;
+            font-weight: bold;
+            font-size: 15.6px
+        };
+    }
+    /* .mandatory-sign {
+        color: blue;
+        font-size: 11.6px;
+    } */
+};
+
+
 /* .playfair-display-<uniquifier> {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
