@@ -12,7 +12,7 @@ body {
     width: 100%;
 }
 
-h1, h2, h3{
+h1, h2, h3 {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -60,6 +60,7 @@ h1, h2, h3{
     height: 10vh;
     position: fixed;
     background-color: #d6c4a8;
+    z-index: 10;
 }
 
 .banner {
@@ -128,23 +129,23 @@ h1, h2, h3{
     justify-content: center;
 }
 
-.quote-container {
+#quote-container {
     width: 50%;
     height: 50%;
 }
 
-.quote-text, .quote-autor {
+#quote-text, #quote-autor {
     color: white;
     font-family: "Playfair Display", serif;
     font-weight: bold;
 }
 
-.quote-text {
+#quote-text {
     font-size: 46.6px;
     text-align: center;
 }
 
-.quote-autor {
+#quote-autor {
     font-size: 28px;
     text-align: right;
 }

@@ -2,13 +2,18 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Home - Ler&Saber</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
 </head>
 
 <body class="index">
@@ -35,28 +40,31 @@
         </div>
     </header>
 
-    <section class="section flex" id="home">
-        <div class="quote-container">
-            <p class="quote-text">"A leitura é o caminho mais curto para o conhecimento."</p>
-            <p class="quote-autor">~ Aristóteles </p>
-        </div>
-        <div class="button-container">
-            <button id="cadastro-button">
-                <a href="cadastro.html">Comece sua jornada de leitura agora!</a>
-            </button>
-        </div>
-        <!-- <video autoplay muted loop class="banner" id="home-video">
-            <source src="https://www.youtube.com/watch?v=YeQHwX7BTEw" type="video/mp4">
-        </video> -->
-        <!-- <img src="../public/assets/bckg-home.png" alt="" class="banner"> -->
-    </section>
-
-    <section class="section" id="habito"></section>
-    <section class="section" id="beneficios"></section>
-    <section class="section" id="sobre"></section>
-    <section class="section" id="ferramentas"></section>
+    <main>
+        <section class="section flex" id="home">
+            <div id="quote-container">
+                <p id="quote-text">"A leitura é o caminho mais curto para o conhecimento."</p>
+                <p id="quote-autor">~ Aristóteles </p>
+            </div>
+            <div class="button-container">
+                <button id="cadastro-button">
+                    <a href="cadastro.html">Comece sua jornada de leitura agora!</a>
+                </button>
+            </div>
+            <!-- <video autoplay muted loop class="banner" id="home-video">
+                <source src="https://www.youtube.com/watch?v=YeQHwX7BTEw" type="video/mp4">
+            </video> -->
+            <!-- <img src="../public/assets/bckg-home.png" alt="" class="banner"> -->
+        </section>
+        <section class="section" id="habito"></section>
+        <section class="section" id="beneficios"></section>
+        <section class="section" id="sobre"></section>
+        <section class="section" id="ferramentas"></section>
+    </main>
 
     <footer class="footer"></footer>
 </body>
 
 </html>
+
+<script src="js/app.js"></script>

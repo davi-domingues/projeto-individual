@@ -1,13 +1,17 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Login - Ler&Saber</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="login">
@@ -24,13 +28,13 @@
         <main class="container flex">
             <h1>Login</h1>
             <div class="container flex forms">
-                <label for="login-email">E-mail:</label>
-                <input placeholder="Insira seu email aqui" type="text" id="login-email">
-                <label for="login-senha">Senha:</label>
-                <input placeholder="Insira sua senha aqui" type="text" id="login-senha">
+                <label for="login_email">E-mail:</label>
+                <input placeholder="Insira seu email aqui" type="text" id="login_email">
+                <label for="login_senha">Senha:</label>
+                <input placeholder="Insira sua senha aqui" type="text" id="login_senha">
                 <br>
                 <div class="button-container">
-                    <button>Entrar</button>
+                    <button onclick="logar()">Entrar</button>
                 </div>
             </div>
             <div class="redirect">
@@ -47,3 +51,61 @@
 </body>
 
 </html>
+
+<script>
+    function logar() {
+        const email = login_email.value;
+        const senha = login_senha.value;
+
+        console.log(`FORM LOGIN: ${email}`);
+        console.log(`FORM SENHA: ${senha}`);
+
+        fetch("/usuario/autenticar",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+            })
+        })
+        .then(function (resposta) {
+            console.log("Estou no THEN do logar()!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.USERNAME_USUARIO = json.username;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.SENHA_USUARIO = json.senha;
+                    
+                    alert('Login realizado com sucesso ', sessionStorage.NOME_USUARIO, '!')
+
+                    setTimeout(function () {
+                        window.location = "/perfil/main.html";
+                    }, 1000); // apenas para exibir o loading   
+
+                });
+                
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        })
+        .catch(function (erro){
+            console.log(erro);
+        })
+    }
+</script>

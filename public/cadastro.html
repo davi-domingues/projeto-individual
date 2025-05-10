@@ -1,13 +1,17 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Cadastro - Ler&Saber</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="cadastro">
@@ -24,20 +28,20 @@
         <main class="container flex">
             <h1>Cadastre-se</h1>
             <div class="container flex forms">
-                <label for="cadastro-nome">Nome:<span class="mandatory-sign">*</span>
+                <label for="cadastro_nome">Nome:<span class="mandatory-sign">*</span>
                 </label>
-                <input placeholder="Insira seu nome aqui" type="text" id="cadastro-nome">
-                <label for="cadastro-username">Username:</label>
-                <input placeholder="Insira seu username aqui" type="text" id="cadastro-username">
-                <label for="cadastro-email">E-mail:</label>
-                <input placeholder="Insira seu email aqui" type="text" id="cadastro-email">
-                <label for="cadastro-senha">Senha:</label>
-                <input placeholder="Insira sua senha aqui" type="text" id="cadastro-senha">
-                <label for="cadastro-confirma">Confirme sua senha:</label>
-                <input placeholder="Insira sua senha novamente aqui" type="text" id="cadastro-confirma">
+                <input placeholder="Insira seu nome aqui" type="text" id="cadastro_nome">
+                <label for="cadastro_username">Username:</label>
+                <input placeholder="Insira seu username aqui" type="text" id="cadastro_username">
+                <label for="cadastro_email">E-mail:</label>
+                <input placeholder="Insira seu email aqui" type="text" id="cadastro_email">
+                <label for="cadastro_senha">Senha:</label>
+                <input placeholder="Insira sua senha aqui" type="text" id="cadastro_senha">
+                <label for="cadastro_confirma">Confirme sua senha:</label>
+                <input placeholder="Insira sua senha novamente aqui" type="text" id="cadastro_confirma">
                 <br>
                 <div class="button-container">
-                    <button>Cadastrar</button>
+                    <button onclick="cadastrar()">Cadastrar</button>
                 </div>
             </div>
             <br>
@@ -55,3 +59,43 @@
 </body>
 
 </html>
+
+<script>
+    function cadastrar() {
+        const nome = cadastro_nome.value;
+        const username = cadastro_username.value;
+        const email = cadastro_email.value;
+        const senha = cadastro_senha.value;
+        const confirma = cadastro_confirma.value;
+
+        // verificação
+
+        fetch("/usuario/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                usernameServer: username,
+                emailServer: email,
+                senhaServer: senha
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    //cadastrado com sucesso + redirecionar
+                    alert('Cadastrado com sucesso!')
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!"
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO ${resposta}`)
+            });
+
+        return false;       
+    };
+</script>

@@ -1,0 +1,3 @@
+CREATE USER 'webdataviz'@'%' IDENTIFIED BY 'xbU0VkM5';
+GRANT ALL PRIVILEGES ON appLerSaber.* TO 'webdataviz'@'%';
+FLUSH PRIVILEGES;
