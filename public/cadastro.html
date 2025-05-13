@@ -10,12 +10,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="cadastro">
-    
+
     <header class="header flex">
         <a href="index.html" class="logo flex">
             <span class="logo-key">{</span>
@@ -40,12 +42,12 @@
 
                 <label for="cadastro_senha">Senha:</label>
                 <input placeholder="Insira sua senha aqui" type="text" id="cadastro_senha">
-                
+
                 <label for="cadastro_confirma">Confirme sua senha:</label>
                 <input placeholder="Insira sua senha novamente aqui" type="text" id="cadastro_confirma">
                 <br>
                 <div class="button-container">
-                    <button onclick="cadastrar()">Cadastrar</button>
+                    <button onclick="aviso()" id="button-cadastrar">Cadastrar</button>
                 </div>
             </div>
             <br>
@@ -58,11 +60,11 @@
 
     <footer class="footer flex">
         <p class="flex">
-            <h4>Feito com amor por Davi Domingues &hearts; SPTech &copy; 2025</h4><span class="version">v1.0.0</span>
+        <h4>Feito com amor por Davi Domingues &hearts; SPTech &copy; 2025</h4><span class="version">v1.0.0</span>
         </p>
         <span class="ref">Imagens Copyright &copy; 2010-2025 Freepik Company S.L. Todos os direitos reservados.</span>
     </footer>
-    
+
 </body>
 
 </html>
@@ -74,8 +76,8 @@
         const email = cadastro_email.value;
         const senha = cadastro_senha.value;
         const confirma = cadastro_confirma.value;
-
         // verificação
+
 
         fetch("/usuario/cadastrar", {
             method: "POST",
@@ -103,6 +105,12 @@
                 console.log(`#ERRO ${resposta}`)
             });
 
-        return false;       
+        return false;
     };
+
+    function aviso() {
+        alert('preencha corretamente')
+    }
 </script>
+
+<script src="js/verificar.js"></script>

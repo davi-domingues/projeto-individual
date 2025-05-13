@@ -46,6 +46,3 @@ infoBack.addEventListener("click", function mudar() {
     infoTitle.innerHTML = infoList.titulo[cardAtual];
     infoText.innerHTML = infoList.texto[cardAtual];
 });
-
-
-
