@@ -154,7 +154,7 @@ h1, h2, h3 {
 .login, .cadastro{
     color: #a67c52;
     .section {
-        background-image: url("../assets/image.png");
+        background-image: url("../assets/livo-biblioteca.jpg");
         background-color: white;
         background-size: cover;
         background-repeat: no-repeat;
