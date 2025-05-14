@@ -31,7 +31,7 @@
             <h1>Cadastre-se</h1>
             <div class="container flex forms">
 
-                <label for="cadastro_nome">Nome:<span class="mandatory-sign">*</span></label>
+                <label for="cadastro_nome">Nome:</label>
                 <input placeholder="Insira seu nome aqui" type="text" id="cadastro_nome">
 
                 <label for="cadastro_username">Username:</label>
@@ -41,14 +41,15 @@
                 <input placeholder="Insira seu email aqui" type="text" id="cadastro_email">
 
                 <label for="cadastro_senha">Senha:</label>
-                <input placeholder="Insira sua senha aqui" type="text" id="cadastro_senha">
+                <input placeholder="Insira sua senha aqui" type="password" id="cadastro_senha">
 
                 <label for="cadastro_confirma">Confirme sua senha:</label>
-                <input placeholder="Insira sua senha novamente aqui" type="text" id="cadastro_confirma">
+                <input placeholder="Insira sua senha novamente aqui" type="password" id="cadastro_confirma">
                 <br>
                 <div class="button-container">
                     <button onclick="aviso()" id="button-cadastrar">Cadastrar</button>
                 </div>
+                <span class= "flex" id="verify-msg"></span>
             </div>
             <br>
             <div class="redirect">
@@ -59,9 +60,9 @@
     </section>
 
     <footer class="footer flex">
-        <p class="flex">
-        <h4>Feito com amor por Davi Domingues &hearts; SPTech &copy; 2025</h4><span class="version">v1.0.0</span>
-        </p>
+        <div class="flex">
+        <h4>Feito com amor por Davi Domingues &hearts; SPTech &copy; 2025</h4><span>♦</span><span class="version">v1.0.0</span>
+        </div>
         <span class="ref">Imagens Copyright &copy; 2010-2025 Freepik Company S.L. Todos os direitos reservados.</span>
     </footer>
 
@@ -96,12 +97,14 @@
 
                 if (resposta.ok) {
                     //cadastrado com sucesso + redirecionar
+                    window.location("./login.html")
                     alert('Cadastrado com sucesso!')
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!"
                 }
             })
             .catch(function (resposta) {
+                alert('Site deconectado do servidor')
                 console.log(`#ERRO ${resposta}`)
             });
 
