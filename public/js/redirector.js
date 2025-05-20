@@ -18,9 +18,9 @@ relogioLink.addEventListener("click", () => { window.location = "./sessao.html" 
 configLink.addEventListener("click", () => { window.location = "./config.html" });
 sairLink.addEventListener("click", () => { sessionStorage.clear(); window.location = "../index.html" });
 diarioCard.addEventListener("click", () => { window.location = "./diario.html" });
-dashboardCard.addEventListener("click", () => { window.location = "./diario.html" });
-calculadoraCard.addEventListener("click", () => { window.location = "./diario.html" });
-relogioCard.addEventListener("click", () => { window.location = "./diario.html" });
+dashboardCard.addEventListener("click", () => { window.location = "./dashboard.html" });
+calculadoraCard.addEventListener("click", () => { window.location = "./calculadora.html" });
+relogioCard.addEventListener("click", () => { window.location = "./sessao.html" });
 
 // window.onload = function testSession() {
 //     if (sessionStorage.length < 2) {

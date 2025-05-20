@@ -7,10 +7,14 @@
     --marrom_claro: #D6C4A8;
 }
 * {
+    margin: 0;
     font-family: "Lora", serif;
     font-optical-sizing: auto;
     font-style: normal;
     /* border: 1px solid black; */
+}
+html {
+    font-size: min(0.17vh, 0.087vw);
 }
 
 body {
@@ -50,11 +54,11 @@ h1, h2, h3 {
 }
 
 .logo .logo-key {
-    font-size: 30.3px;
+    font-size: 30.3rem;
 }
 
 .logo .logo-text {
-    font-size: 27.3px;
+    font-size: 27.3rem;
 }
 
 .section {
@@ -66,7 +70,7 @@ h1, h2, h3 {
 .header{
     width: 100%;
     height: 10vh;
-    position: fixed;
+    position: static;
     background-color: var(--marrom_claro);
     z-index: 10;
 }
@@ -83,7 +87,7 @@ h1, h2, h3 {
 .navbar, .navbar a {
     height: fit-content;
     color: var(--marrom_café);
-    font-size: 16.3px;
+    font-size: 16.3rem;
 }
 
 .navbar a {
@@ -106,9 +110,9 @@ h1, h2, h3 {
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: lighter;
-    font-size: 17px;
+    font-size: 17rem;
     transition: 0.3s;
-    padding: 5px 20px;
+    padding: 5rem 20rem;
     color: var(--marrom_café);
     a{
         color: var(--marrom_café);
@@ -118,18 +122,13 @@ h1, h2, h3 {
 }
 
 .button-container button:hover {
-    box-shadow: 1px 1px 4px 1px var(--marrom_café);
+    box-shadow: 1rem 1rem 4rem 1rem var(--marrom_café);
     transition: 0.3s;
     size: 1.2;
 }
 
-#cadastro-button {
-    position: relative;
-    top: 200%;
-}
-
 #cadastro-button:hover {
-    box-shadow: 1px 1px 4px 1px var(--marrom_claro);
+    box-shadow: 1rem 1rem 4rem 1rem var(--marrom_claro);
 }
 
 #home{
@@ -155,19 +154,98 @@ h1, h2, h3 {
 }
 
 #quote-text {
-    font-size: 46.6px;
+    font-size: 46.6rem;
     text-align: center;
 }
 
 #quote-autor {
-    font-size: 28px;
+    font-size: 28rem;
     text-align: right;
 }
 
 h1 {
     font-style: italic;
-    font-size: 33px;
+    font-size: 33rem;
     margin: 0
+}
+
+#habito, #beneficios, #sobre, #ferramentas {
+    /* border: 1px solid black; */
+    color: var(--marrom_café);
+    h1 {
+        font-size: 56rem
+    };
+    h2 {
+        font-size: 21rem;
+    };
+    h3 {
+        font-size: 17.6rem
+    };
+    p, span {
+        font-size: 18rem
+    };
+    .section-title {
+        text-align: center;
+        width: 100%;
+        height: 20%;
+    };
+    .container {
+        width: 100%;
+        height: 80%;
+        justify-content: space-evenly
+    };
+    .card {
+        margin: 2%;
+        flex-direction: column;
+        height: 90%;
+        width: 30%;
+        border-radius: 20rem;
+        background-color: var(--creme_suave);
+        box-shadow: 4px 4px 0px 0px var(--caramelo);
+        .card-content {
+            width: 80%;
+            height: 70%;
+        };
+        .card-title {
+            text-align: center;
+            padding: 10%;
+            width: 100%;
+            height: 20%;
+        }
+    };
+}
+
+#habito  {
+    .card {
+        margin: 2%;
+        flex-direction: column;
+        height: 90%;
+        width: 30%;
+        border-radius: 20rem;
+        background-color: var(--creme_suave);
+        box-shadow: 4px 4px 0px 0px var(--caramelo);
+        .card-content {
+            width: 80%;
+            height: 70%;
+        };
+        .card-title {
+            text-align: center;
+            padding: 10%;
+            width: 100%;
+            height: 20%;
+        }
+    };
+}
+
+#beneficios {
+    background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../assets/homem-lendo-estante.png");
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .login, .cadastro{
@@ -182,6 +260,7 @@ h1 {
     .header {
         justify-content: left;
         background-color: transparent;
+        position: fixed
     };
     .logo {
         margin-left: 5%;
@@ -191,11 +270,11 @@ h1 {
         background-color: var(--creme_suave);
         height: 70%;
         width: 30%;
-        border-radius: 20px;
-        padding: 5px;
-    };
+        border-radius: 20rem;
+        padding: 5rem;
+    };  
     .redirect {
-        font-size: 11.6px;
+        font-size: 11.6rem;
         span {
             color: var(--marrom_escuro)
         };
@@ -207,7 +286,8 @@ h1 {
         width: 55%;
     }
     input {
-        border: 1px solid var(--caramelo);
+        font-size: 17rem;
+        border: 1rem solid var(--caramelo);
         border-radius: 100px;
         background-color: transparent;
         text-align: center;
@@ -218,7 +298,7 @@ h1 {
     }
     input::placeholder {
         color:var(--caramelo);
-        font-size: 10.3px;
+        font-size: 10.3rem;
         font-weight: bold;
         font-style: italic;
     }
@@ -229,12 +309,12 @@ h1 {
         label {
             align-self: flex-start;
             font-weight: bold;
-            font-size: 15.6px
+            font-size: 15.6rem
         };
     };
     /* .mandatory-sign {
         color: blue;
-        font-size: 11.6px;
+        font-size: 11.6rem;
     } */
     #verify-msg {
         width: 30%;
@@ -242,7 +322,7 @@ h1 {
         position: absolute;
         bottom: 20vh;
         color: red;
-        font-size: 10px;
+        font-size: 10rem;
         text-align: center;
     }
 }
@@ -254,7 +334,7 @@ h1 {
     color: var(--caramelo);
     *{border: 1px solid black;};
     .navbar {
-        font-size: 10px;
+        font-size: 10rem;
         flex-direction: column;
         height: 100vh;
         width: 15%;
@@ -297,13 +377,14 @@ h1 {
     justify-content: space-between;
     align-items: center;
     color: var(--marrom_café);
-    font-size: 10px;
-    border-top: 1px solid var(--marrom_café);
+    font-size: 10rem;
+    border-top: 1rem solid var(--marrom_café);
     * {
         margin: 0;
-        padding: 0px 10px;
+        padding: 0rem 10rem;
     };
     .ref {
-        font-size: 8px;
+        font-size: 8rem;
     };
+
 }
