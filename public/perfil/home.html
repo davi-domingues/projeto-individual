@@ -26,13 +26,11 @@
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
+                    <div id="perfilSession"></div>
                     <div>
-                        <span>foto-perfil</span>
-                    </div>
-                    <div>
-                        <h3>Nome</h3>
-                        <span>email@email.com</span>
-                        <span>user_name</span>
+                        <h3 id="nomeSession">Nome</h3>
+                        <span id="emailSession">email@email.com</span>
+                        <span id="usernameSession">user_name</span>
                     </div>
                     <div>
                         <span>config-icon</span>
@@ -73,24 +71,26 @@
                 </div>
             </div>
             <div class="home flex">
-                <h1>Boas vindas leitor(a)!</h1>
+                <div class="title flex">
+                    <h1>Boas vindas leitor(a)!</h1>
+                </div>
                 <div class="toolsCard flex">
-                    <div class="container" id="diarioCard">
+                    <div class="container flex" id="diarioCard">
                         <h2>Diário de Leitura</h2>
                         <span>livro-icon</span>
                         <p>Registre aqui diariamente suas leituras e seus livros em andamento.</p>
                     </div>
-                    <div class="container" id="dashboardCard">
+                    <div class="container flex" id="dashboardCard">
                         <h2>Dashboard</h2>
                         <span>Dashboard-icon</span>
                         <p>Veja suas métricas pessoais de leitura e compare com outros leitores.</p>
                     </div>
-                    <div class="container" id="calculadoraCard">
+                    <div class="container flex" id="calculadoraCard">
                         <h2>Calculadora</h2>
                         <span>Calculadora-icon</span>
                         <p>Calcule e estime o tempo que levará para terminar a leitura do seu próximo livro.</p>
                     </div>
-                    <div class="container" id="relogioCard">
+                    <div class="container flex" id="relogioCard">
                         <h2>Sessão de Concentração</h2>
                         <span>Relógio-icon</span>
                         <p>Marque o tempo e comece a ler!</p>
@@ -112,3 +112,4 @@
 </html>
 
 <script src="../js/redirector.js"></script>
+<script src="../js/onloadPerfil.js"></script>

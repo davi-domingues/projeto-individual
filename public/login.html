@@ -31,7 +31,7 @@
                 <label for="login_email">E-mail:</label>
                 <input placeholder="Insira seu email aqui" type="text" id="login_email">
                 <label for="login_senha">Senha:</label>
-                <input placeholder="Insira sua senha aqui" type="text" id="login_senha">
+                <input placeholder="Insira sua senha aqui" type="password" id="login_senha">
                 <br>
                 <div class="button-container">
                     <button onclick="logar()">Entrar</button>
@@ -92,7 +92,7 @@
                     alert('Login realizado com sucesso ', sessionStorage.NOME_USUARIO, '!')
 
                     setTimeout(function () {
-                        window.location = "/perfil/main.html";
+                        window.location = "./perfil/home.html";
                     }, 1000); // apenas para exibir o loading   
 
                 });

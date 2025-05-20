@@ -328,11 +328,21 @@ h1 {
 }
 
 .perfil {
+    font-size: 17rem;
     margin: 0;
     width: 100%;
     height: 100vh;
     color: var(--caramelo);
     *{border: 1px solid black;};
+    #perfilSession {
+        height: 50%;
+        width: 30%;
+        background: url("../assets/padrao-perfil.png");
+        background-color: transparent;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
     .navbar {
         font-size: 10rem;
         flex-direction: column;
@@ -356,11 +366,16 @@ h1 {
         flex-direction: column;
         height: 100vh;
         width: 85%;
+        .title {
+            width: 100%;
+            height: 10%;
+        }
         .toolsCard {
             flex-wrap: wrap;
             width: 100%;
-            height: 80%;
+            height: 90%;
             .container {
+                flex-direction: column;
                 text-align: center;
                 height: 40%;
                 width: 35%;

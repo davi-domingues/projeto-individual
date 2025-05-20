@@ -92,21 +92,21 @@
                 senhaServer: senha
             }),
         })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
 
-                if (resposta.ok) {
-                    //cadastrado com sucesso + redirecionar
-                    window.location("./login.html")
-                    alert('Cadastrado com sucesso!')
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!"
-                }
-            })
-            .catch(function (resposta) {
-                alert('Site deconectado do servidor')
-                console.log(`#ERRO ${resposta}`)
-            });
+            if (resposta.ok) {
+                //cadastrado com sucesso + redirecionar
+                window.location = "./login.html";
+                alert('Cadastrado com sucesso!')
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!"
+            }
+        })
+        .catch(function (resposta) {
+            alert('Site deconectado do servidor')
+            console.log(`#ERRO ${resposta}`)
+        });
 
         return false;
     };
