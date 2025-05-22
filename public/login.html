@@ -28,9 +28,9 @@
         <main class="container flex">
             <h1>Login</h1>
             <div class="container flex forms">
-                <label for="login_email">E-mail:</label>
-                <input placeholder="Insira seu email aqui" type="text" id="login_email">
-                <label for="login_senha">Senha:</label>
+                <label for="login_usuario">E-mail/Username</label>
+                <input placeholder="Insira seu email ou username aqui" type="text" id="login_usuario">
+                <label for="login_senha">Senha</label>
                 <input placeholder="Insira sua senha aqui" type="password" id="login_senha">
                 <br>
                 <div class="button-container">
@@ -57,10 +57,12 @@
 
 <script>
     function logar() {
-        const email = login_email.value;
+        const usuario = login_usuario.value;
         const senha = login_senha.value;
+        
+        if (usuario == '' || senha == '') {return false};
 
-        console.log(`FORM LOGIN: ${email}`);
+        console.log(`FORM LOGIN: ${usuario}`);
         console.log(`FORM SENHA: ${senha}`);
 
         fetch("/usuario/autenticar",{
@@ -69,7 +71,7 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                emailServer: email,
+                usuarioServer: usuario,
                 senhaServer: senha
             })
         })
@@ -89,7 +91,7 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.SENHA_USUARIO = json.senha;
                     
-                    alert('Login realizado com sucesso ', sessionStorage.NOME_USUARIO, '!')
+                    alert(`Login realizado com sucesso ${sessionStorage.NOME_USUARIO}!`)
 
                     setTimeout(function () {
                         window.location = "./perfil/home.html";
@@ -97,12 +99,13 @@
 
                 });
                 
+            } else if (resposta.status === 403) {
+                alert('Login ou senha inválido(s)')
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizarAguardar(texto);
                 });
             }
 

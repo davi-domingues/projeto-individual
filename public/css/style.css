@@ -387,6 +387,7 @@ h1 {
             };
             .container:hover {
             transform: translateY(-10rem);
+            cursor: pointer;
             };
         };
     };

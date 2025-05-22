@@ -23,7 +23,7 @@ ipt_nome.addEventListener("input",
 ipt_username.addEventListener("input",
     function () {
         const username = ipt_username.value
-        verifyUsername = ((username != '') && (username.length <= 15) && (username.length >= 5) && !(/[^(a-z0-9)(_\-.)]/u.test(username)));
+        verifyUsername = ((username != '') && (username.length <= 15) && (username.length >= 5) && !(/[^(a-z0-9)(_\-.)]/iu.test(username)));
         colorInputBorder(ipt_username, username, verifyUsername);
         exibirMensagemErro(1, username);
     });

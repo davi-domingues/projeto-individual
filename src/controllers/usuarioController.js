@@ -1,5 +1,51 @@
 var usuarioModel = require("../models/usuarioModel");
 
+function pesquisarUsername(req, res) {
+    var username = req.body.usernameServer;
+
+    username == undefined ? res.status(400).send("Username undefinied"):
+    usuarioModel.pesquisarUsername(username)
+        .then( (resultado) => {
+            if (resultado[0].qtdusername > 0) {
+                res.status(409).send('Username já cadastrado');
+            };
+            })
+            .catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao pesquisar username! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            )
+    ;
+};
+
+function pesquisarEmail(req, res) {
+    var email = req.body.emailServer;
+
+    email == undefined ? res.status(400).send("Email undefinied"):
+    usuarioModel.pesquisarEmail(email)
+        .then( (resultado) => {
+            if (resultado[0].qtdemail > 0) {
+                res.status(409).send('Email já cadastrado');
+            };
+        })
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao pesquisar email! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+        ;
+};
+
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var username = req.body.usernameServer;
@@ -31,13 +77,13 @@ function cadastrar(req, res) {
 };
 
 function autenticar(req, res) {
-    var email = req.body.emailServer;
+    var usuario = req.body.usuarioServer;
     var senha = req.body.senhaServer;
 
-    email == undefined ? res.status(400).send("Seu email está undefined!") :
+    usuario == undefined ? res.status(400).send("Seu usuario está undefined!") :
     senha == undefined ? res.status(400).send("Sua senha está indefinida!") :
 
-    usuarioModel.autenticar(email, senha)
+    usuarioModel.autenticar(usuario, senha)
         .then(
             function (resultadoAutenticar) {  
                 console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -55,7 +101,7 @@ function autenticar(req, res) {
                     });
 
                 } else if (resultadoAutenticar.length == 0) {
-                    res.status(403).send("Email e/ou senha inválido(s)");
+                    res.status(403).send("Usuario e/ou senha inválido(s)");
                 } else {
                     res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                 }
@@ -73,5 +119,7 @@ function autenticar(req, res) {
 
 module.exports = {
     cadastrar,
-    autenticar
+    autenticar,
+    pesquisarUsername,
+    pesquisarEmail
 }
