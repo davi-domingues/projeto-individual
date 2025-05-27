@@ -74,6 +74,15 @@
             </div>
             <div class="home flex">
                 <h1>Sessão de Concentração</h1>
+                <div>
+                    <h3><span id="cronometro_horas">00</span>:<span id="cronometro_minutos">00</span>:<span
+                            id="cronometro_segundos">00</span></h3>
+                </div>
+                <div>
+                    <button onclick="iniciarSessao()" id="button_controle">&#11208;</button>
+                    <button onclick="reiniciarSessao()" id="button-reiniciar">Reiniciar</button>
+                    <button onclick="salvarSessao()">Salvar</button>
+                </div>
             </div>
         </section>
     </main>
@@ -90,3 +99,4 @@
 </html>
 
 <script src="../js/redirector.js"></script>
+<script src="../js/cronometro.js"></script>
