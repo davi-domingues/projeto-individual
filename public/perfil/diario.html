@@ -117,7 +117,7 @@
                             <br><br>
                             <textarea id="ipt_sinopse" cols="50" rows="5" style="resize: none"></textarea>
                             <br><br>
-                            <input type="button" value="Enviar" id="ipt_enviar">
+                            <input type="button" value="Enviar" id="ipt_enviarLivro">
                         </forms>
                     </div>
                     <div id="pagina_registroLeitura" style="display: none;">
@@ -135,7 +135,7 @@
                             <br><br>
                             <textarea id="ipt_comentario" cols="50" rows="5" style="resize: none"></textarea>
                             <br><br>
-                            <input type="button" value="Enviar" id="ipt_enviar">
+                            <input type="button" value="Enviar" id="ipt_enviarLeitura">
                         </forms>
                     </div>
                 </div>
@@ -155,6 +155,23 @@
 </html>
 
 <script src="../js/redirector.js"></script>
+
+<script>
+    const enviarLivro = document.getElementById('ipt_enviarLivro')
+    const enviarLeitura = document.getElementById('ipt_enviarLeitura')
+
+    enviarLivro.addEventListener('onclick', () => {cadastrarLivro();})
+    enviarLeitura.addEventListener('onclick', () => {registrarLeitura();})
+
+    function cadastrarLivro() {
+        
+    };
+    
+    function registrarLeitura() {
+        
+    };
+</script>
+
 <script>
     function paginaCadastrarLivro() {
         habilitar(pagina_conteudo);
@@ -181,5 +198,5 @@
     };
     function desabilitar(idElement) {
         idElement.style.display = 'none'
-    };   
+    };
 </script>
