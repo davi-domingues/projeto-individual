@@ -97,7 +97,6 @@ function autenticar(req, res) {
                         nome: resultadoAutenticar[0].nome,
                         username: resultadoAutenticar[0].username,
                         email: resultadoAutenticar[0].email,
-                        senha: resultadoAutenticar[0].senha,
                     });
 
                 } else if (resultadoAutenticar.length == 0) {
