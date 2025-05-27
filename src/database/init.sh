@@ -1,13 +1,13 @@
 #!/bin/bash
 
-read -p "Usuario: " user
+read -p "Usuario: " usersql
 read -s -p "Senha: " passwd
 
 structure=$(cat structure.sql)
 routines=$(cat routines.sql)
 user=$(cat user.sql)
 
-mysql -u"$user" -p"$passwd" <<EOF
+mysql -u"$usersql" -p"$passwd" <<EOF
 
 $structure
 $routines
