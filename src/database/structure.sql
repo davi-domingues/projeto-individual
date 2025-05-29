@@ -73,8 +73,3 @@ CREATE VIEW vw_usuario AS
         at_senha             AS senha
 	FROM
 		tb_usuario_leitor;
-
-        
-    
-
-		
