@@ -43,16 +43,16 @@ function cadastrarLivro(req, res) {
 
 function registrarLeitura(req, res) {
     var idUsuario = req.body.idUsuarioServer;
-    var livro = req.body.livroServer;
+    var idLivro = req.body.idLivroServer;
     var paginasLidas = req.body.paginasLidasServer;
     var comentario = req.body.comentarioServer;
 
     idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
-    livro == undefined ? res.status(400).send("livro está undefined") :
+    idLivro == undefined ? res.status(400).send("idLivro está undefined") :
     paginasLidas == undefined ? res.status(400).send("paginasLidas está undefined") :
     comentario == undefined ? res.status(400).send("comentario está undefined") :
 
-    diarioModel.registrarLeitura(idUsuario, livro, paginasLidas, comentario)
+    diarioModel.registrarLeitura(idLivro, idUsuario, paginasLidas, comentario)
         .then(
             function (resultado) {
                 res.status(200).json(resultado);
@@ -71,7 +71,28 @@ function registrarLeitura(req, res) {
     ;
 };
 
+function listarLivrosPorId(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    console.log(`Buscando livros cadastrados por usuário de ID ${idUsuario}`);
+
+    diarioModel.listarLivrosPorId(idUsuario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar os livros cadastrados.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrarLivro,
-    registrarLeitura
+    registrarLeitura,
+    listarLivrosPorId
 };

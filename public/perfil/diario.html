@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="perfil">
+<body class="perfil" onload="listarLivros()">
     
     <header>
 
@@ -157,6 +157,8 @@
 <script src="../js/redirector.js"></script>
 
 <script>
+    listaLivrosCadastrados = [];
+
     function cadastrarLivro() {
         const idUsuario = sessionStorage.ID_USUARIO;
         const nome = ipt_nome.value;
@@ -210,7 +212,7 @@
     
     function registrarLeitura() {
         const idUsuario = sessionStorage.ID_USUARIO;
-        const livro = ipt_livro.value;
+        const idLivro = ipt_livro.value;
         const paginasLidas = ipt_paginasLidas.value;
         const comentario = ipt_comentario.value;
 
@@ -221,7 +223,7 @@
             },
             body: JSON.stringify({
                 idUsuarioServer: idUsuario,
-                livroServer: livro,
+                idLivroServer: idLivro,
                 paginasLidasServer: paginasLidas,
                 comentarioServer: comentario
             }),
@@ -242,6 +244,24 @@
             console.log(`#ERRO ${resposta}`)
         });
     };
+
+    function listarLivros() {
+        fetch(`/diario/listarLivros/${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+            .then((resposta) => {
+                resposta.json().then((livros) => {
+                    livros.forEach((livro) => {
+                        listaLivrosCadastrados.push(livro);
+                        const option = ipt_livro.appendChild(document.createElement("option"));
+                        option.textContent = `${livro.at_nome} - ${livro.at_autor} (${livro.at_paginas_total} páginas)`;
+                        option.value = livro.at_idLivro;
+                    })
+                })
+            })
+            .catch((resposta) => {
+                console,log(`#ERRO: ${resposta}`)
+            })
+        ;
+    }
 </script>
 
 <script>

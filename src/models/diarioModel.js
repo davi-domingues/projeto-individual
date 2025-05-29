@@ -11,18 +11,26 @@ function cadastrarLivro(idUsuario, nome, autor, paginas, editora, genero, ano, i
     return database.executar(instrucaoSql);
 };
 
-function registrarLeitura(idlivro, idUsuario, paginasLidas, comentario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", idUsuario, idlivro, paginasLidas, comentario);
+function registrarLeitura(idLivro, idUsuario, paginasLidas, comentario) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", idUsuario, idLivro, paginasLidas, comentario);
 
     var instrucaoSql = `
-        CALL registrar_leitura('${idlivro}', '${idUsuario}', '${paginasLidas}', '${comentario}')
+        CALL registrar_leitura('${idLivro}', '${idUsuario}', '${paginasLidas}', '${comentario}')
     `;
 
     console.log("Executando a instrução SQL: \n", instrucaoSql);
     return database.executar(instrucaoSql);
 };
 
+function listarLivrosPorId(idUsuario) {
+    var instrucaoSql = `SELECT * FROM tb_livro_individual WHERE at_fk_idUsuario = ${idUsuario}`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrarLivro,
-    registrarLeitura
+    registrarLeitura,
+    listarLivrosPorId
 };

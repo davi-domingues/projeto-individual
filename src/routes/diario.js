@@ -11,4 +11,8 @@ router.post("/registrarLeitura", function (req, res) {
     diarioController.registrarLeitura(req, res);
 });
 
+router.get("/listarLivros/:idUsuario", function (req, res) {
+    diarioController.listarLivrosPorId(req, res);
+})
+
 module.exports = router;
