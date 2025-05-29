@@ -103,6 +103,45 @@
 
 <script>
     function salvarSessao() {
+        const segundos = cronometro_segundos.innerHTML;
+        const minutos = cronometro_minutos.innerHTML;
+        const horas = cronometro_horas.innerHTML;
+
+        if (segundos == '00' && minutos == '00' && horas == '00') {
+            alert('Comece sua sessão de leitura antes de salvar!')
+            return false;
+        };
+
+        const tempo = `${horas}:${minutos}:${segundos}`
+        const idUsuario = sessionStorage.ID_USUARIO;
         
+        fetch('/sessao/registrarSessao', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                tempoServer: tempo,
+                idUsuarioServer: idUsuario
+            }),
+        })
+        .then((resposta) => {
+            if (resposta.ok) {
+                console.log(resposta);
+                alert('Tempo salvo com sucesso! Parabéns pelo seu desempenho leitor(a)!')
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            };
+        })
+        .catch((resposta) => {
+            console.log(resposta)
+            console.log(resposta.status)
+            if (resposta.status === 500) {alert('Site deconectado do servidor')};
+            console.log(`#ERRO ${resposta}`)
+        })
+        ;
+
+        pausarSessao();
+        reiniciarSessao();
     };
 </script>

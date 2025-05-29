@@ -50,3 +50,11 @@ CREATE PROCEDURE registrar_leitura(idLivro INT, idUsuario INT, paginasLidas INT,
 		INSERT INTO tb_leitura_diario VALUES (default, idLivro, idUsuario, paginasLidas, default, comentario);
 	END$$
 DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS registrar_sessao;
+CREATE PROCEDURE registrar_sessao(idUsuario INT, tempo TIME)
+	BEGIN
+		INSERT INTO tb_sessao_concentracao VALUES (default, idUsuario, default, tempo);
+	END$$
+DELIMITER ;
