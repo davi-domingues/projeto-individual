@@ -26,13 +26,11 @@
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
+                    <div id="perfilSession"></div>
                     <div>
-                        <span>foto-perfil</span>
-                    </div>
-                    <div>
-                        <h3>Nome</h3>
-                        <span>email@email.com</span>
-                        <span>user_name</span>
+                        <h3 id="nomeSession">Nome</h3>
+                        <span id="emailSession">email@email.com</span>
+                        <span id="usernameSession">user_name</span>
                     </div>
                     <div>
                         <span>config-icon</span>
@@ -100,6 +98,7 @@
 
 <script src="../js/redirector.js"></script>
 <script src="../js/cronometro.js"></script>
+<script src="../js/onloadPerfil.js"></script>
 
 <script>
     function salvarSessao() {
