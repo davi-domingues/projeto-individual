@@ -26,13 +26,11 @@
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
+                    <div id="perfilSession"></div>
                     <div>
-                        <span>foto-perfil</span>
-                    </div>
-                    <div>
-                        <h3>Nome</h3>
-                        <span>email@email.com</span>
-                        <span>user_name</span>
+                        <h3 id="nomeSession">Nome</h3>
+                        <span id="emailSession">email@email.com</span>
+                        <span id="usernameSession">user_name</span>
                     </div>
                     <div>
                         <span>config-icon</span>
@@ -73,7 +71,36 @@
                 </div>
             </div>
             <div class="home flex">
-                <h1>Dashboard</h1>
+                <div class="dashboard flex">
+                    <div class="title flex">
+                        <h1>Veja aqui suas métricas!</h1>
+                    </div>
+                    <div class="main-content flex">
+                        <div class="left-box">
+                            <div class="kpis flex">
+                                <div class="kpi-box1">streak dias</div>
+                                <div class="kpi-box1">ultimo livro</div>
+                                <div class="kpi-box1">
+                                    <div class="kpi-box2">tempo recorde</div>
+                                    <div class="kpi-box2">qtd livros lidos</div>
+                                    <div class="kpi-box2">seu ranking</div>
+                                </div>
+                            </div>
+                            <div class="line-chart">
+                                <canvas>gráfico linha (paginasxdias)</canvas>
+                            </div>
+                        </div>
+                        <div class="right-box">
+                            <div class="content" style="display: none;" id="podium">
+                                <canvas>podium</canvas>
+                            </div>
+                            <div class="content" style="display: block;" id="ranking">
+                                ranking
+                                <button onclick="">Podium</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -90,3 +117,8 @@
 </html>
 
 <script src="../js/redirector.js"></script>
+<script src="../js/onloadPerfil.js"></script>
+
+<script>
+
+</script>
