@@ -348,6 +348,10 @@ h1 {
         background-repeat: no-repeat;
         background-position: center;
     }
+    .link-button:hover{
+        cursor: pointer;
+        border: 1px solid var(--marrom_café);
+    }
     .navbar {
         font-size: 10rem;
         flex-direction: column;
