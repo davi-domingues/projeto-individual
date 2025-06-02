@@ -1,9 +1,30 @@
 var database = require("../database/config");
 
-function func(params) {
-    
+function buscarTempoRecorde(idUsuario) {
+    var instrucaoSql = `SELECT tempo AS tempoRecorde FROM vw_sessao WHERE idUsuario = ${idUsuario} ORDER BY 1 DESC LIMIT 1`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 };
 
+function buscarLivrosConcluidos(idUsuario) {
+    var instrucaoSql = `SELECT COUNT(idLivro) AS qtd_livrosLidos FROM vw_status_livro_leitura WHERE idUsuario = ${idUsuario} GROUP BY status HAVING status = 'Concluído'`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+};
+
+function buscarUltimoLivro(idUsuario) {
+    var instrucaoSql = `SELECT * FROM vw_status_livro_leitura WHERE idLivro = (SELECT idLivro FROM vw_leitura ORDER BY dtRegistro DESC LIMIT 1) AND idUsuario = ${idUsuario}`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+};
+
+
+
 module.exports = {
-    func
+    buscarTempoRecorde,
+    buscarLivrosConcluidos,
+    buscarUltimoLivro
 };

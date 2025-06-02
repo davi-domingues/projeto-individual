@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="perfil">
+<body class="perfil" onload="plotarDashboard()">
     
     <header>
 
@@ -85,11 +85,21 @@
                                 </div>
                                 <div class="kpi-box1">
                                     <h4>ultimo livro</h4>
+                                    <span id="ultimo_livro"></span>
                                 </div>
                                 <div class="kpi-box1">
-                                    <div class="kpi-box2">tempo recorde</div>
-                                    <div class="kpi-box2">qtd livros lidos</div>
-                                    <div class="kpi-box2">seu ranking</div>
+                                    <div class="kpi-box2">
+                                        <span>Tempo Recorde:</span>
+                                        <span id="tempo_recorde"></span>
+                                    </div>
+                                    <div class="kpi-box2">
+                                        <span>Livros Concluídos:</span>
+                                        <span id="livros_concluidos"></span>
+                                    </div>
+                                    <div class="kpi-box2">
+                                        <span>Seu ranking:</span>
+                                        <span id="ranking"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="line-chart">
@@ -126,5 +136,61 @@
 <script src="../js/onloadPerfil.js"></script>
 
 <script>
+    function plotarDashboard() {
+        
+        fetch(`/dashboard/tempoRecorde/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status = 204) {
+                tempo_recorde.innerHTML = 's/ registro'
+            };
+            if (resposta.status = 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    tempo_recorde.innerHTML = json[0].tempoRecorde
+                })
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
 
+        fetch(`/dashboard/livrosConcluidos/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status = 204) {
+                livros_concluidos.innerHTML = 's/ registro'
+            };
+            if (resposta.status = 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    livros_concluidos.innerHTML = json[0].qtd_livrosLidos
+                })
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
+
+        fetch(`/dashboard/ultimoLivro/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status = 204) {
+                ultimo_livro.innerHTML = 's/ registro'
+            };
+            if (resposta.status = 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    ultimo_livro.innerHTML = `
+                        Nome: ${json[0].nome} <br>
+                        Autor: ${json[0].autor} <br>
+                        Porcentagem: ${json[0].porcentagemLida}
+                    `;
+                })
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        })
+    }
 </script>

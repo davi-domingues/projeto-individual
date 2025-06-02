@@ -1,9 +1,51 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function func(req, res) {
-    
+function buscarTempoRecorde(req, res) {
+    var idUsuario = req.params.idUsuario;
 
-    dashboardModel.func(param)
+    dashboardModel.buscarTempoRecorde(idUsuario)
+    .then(
+        function (resultado) {
+            res.status(200).json(resultado);
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+function buscarLivrosConcluidos(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    dashboardModel.buscarLivrosConcluidos(idUsuario)
+    .then(
+        function (resultado) {
+            res.status(200).json(resultado);
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+function buscarUltimoLivro(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    dashboardModel.buscarUltimoLivro(idUsuario)
     .then(
         function (resultado) {
             res.status(200).json(resultado);
@@ -22,5 +64,7 @@ function func(req, res) {
 };
 
 module.exports = {
-    func
+    buscarTempoRecorde,
+    buscarLivrosConcluidos,
+    buscarUltimoLivro
 };
