@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 
 
@@ -97,22 +98,23 @@
                                         <span id="livros_concluidos"></span>
                                     </div>
                                     <div class="kpi-box2">
-                                        <span>Seu ranking:</span>
-                                        <span id="ranking"></span>
+                                        <span>Seu ranking:</span><br>
+                                        <span id="ranking_usuario"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="line-chart">
-                                <canvas>gráfico linha (paginasxdias)</canvas>
+                                <canvas id="myChartCanvas"></canvas>
                             </div>
                         </div>
                         <div class="right-box">
                             <div class="content" style="display: none;" id="podium">
                                 <canvas>podium</canvas>
+                                <button onclick="mostrarRanking()">Ranking</button>
                             </div>
                             <div class="content" style="display: block;" id="ranking">
                                 ranking
-                                <button onclick="">Podium</button>
+                                <button onclick="mostrarPodium()">Podium</button>
                             </div>
                         </div>
                     </div>
@@ -136,15 +138,35 @@
 <script src="../js/onloadPerfil.js"></script>
 
 <script>
-    function plotarDashboard() {
+    function habilitar(idElement) {
+        idElement.style.display = 'block'
+    };
+    function desabilitar(idElement) {
+        idElement.style.display = 'none'
+    };
+
+    function mostrarRanking() {
+        habilitar(ranking);
+        desabilitar(podium);
+    };
+    function mostrarPodium() {
+        habilitar(podium);
+        desabilitar(ranking);
         
-        fetch(`/dashboard/tempoRecorde/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+    };
+</script>
+
+<script>
+    function plotarDashboard() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/dashboard/tempoRecorde/${idUsuario}`,  { cache: 'no-store' })
         .then((resposta) => {
             console.log(resposta)
-            if (resposta.status = 204) {
+            if (resposta.status == 204) {
                 tempo_recorde.innerHTML = 's/ registro'
             };
-            if (resposta.status = 200) {
+            if (resposta.status == 200) {
                 resposta.json().then((json) => {
                     console.log(json)
                     tempo_recorde.innerHTML = json[0].tempoRecorde
@@ -155,13 +177,13 @@
                 console.log(`#ERRO: ${resposta}`)
         });
 
-        fetch(`/dashboard/livrosConcluidos/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+        fetch(`/dashboard/livrosConcluidos/${idUsuario}`,  { cache: 'no-store' })
         .then((resposta) => {
             console.log(resposta)
-            if (resposta.status = 204) {
+            if (resposta.status == 204) {
                 livros_concluidos.innerHTML = 's/ registro'
             };
-            if (resposta.status = 200) {
+            if (resposta.status == 200) {
                 resposta.json().then((json) => {
                     console.log(json)
                     livros_concluidos.innerHTML = json[0].qtd_livrosLidos
@@ -172,13 +194,50 @@
                 console.log(`#ERRO: ${resposta}`)
         });
 
-        fetch(`/dashboard/ultimoLivro/${sessionStorage.ID_USUARIO}`,  { cache: 'no-store' })
+        fetch(`/dashboard/rankingPorUsuario/${idUsuario}`,  { cache: 'no-store' })
         .then((resposta) => {
             console.log(resposta)
-            if (resposta.status = 204) {
+            if (resposta.status == 204) {
+                ranking.innerHTML = 's/ registro'
+            };
+            if (resposta.status == 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    ranking_usuario.innerHTML = `#${json[0].ranking} - (${json[0].pontos} pontos)`;
+                })
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
+
+        fetch(`/dashboard/rankingGeral`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status == 204) {
+                ranking.innerHTML = 's/ registro'
+            };
+            if (resposta.status == 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    json.forEach((user) => {
+                        const div = ranking.appendChild(document.createElement("div"));
+                        div.innerHTML = `#${user.ranking} @${user.username} (${user.pontos} pontos)`
+                    })
+                })
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
+
+        fetch(`/dashboard/ultimoLivro/${idUsuario}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status == 204) {
                 ultimo_livro.innerHTML = 's/ registro'
             };
-            if (resposta.status = 200) {
+            if (resposta.status == 200) {
                 resposta.json().then((json) => {
                     console.log(json)
                     ultimo_livro.innerHTML = `
@@ -191,6 +250,76 @@
         })
         .catch((resposta) => {
                 console.log(`#ERRO: ${resposta}`)
+        });
+
+        fetch(`/dashboard/tempoPorDia/${idUsuario}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            if (resposta.status == 204) {
+
+            };
+            if (resposta.status == 200) {
+
+            }
         })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
+
+        fetch(`/dashboard/paginasPorDia/${idUsuario}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            if (resposta.status == 204) {
+
+            };
+            if (resposta.status == 200) {
+                resposta.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+                    plotarGrafico(resposta);
+
+                });
+            }
+        })
+        .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+        });
+
+
+    };
+
+    function plotarGrafico(resposta) {
+        let labels = [];
+
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Páginas lidas x Dia',
+                data: [],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        console.log(resposta)
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            labels.push(registro.dia);
+            dados.datasets[0].data.push(registro.somaPaginasLidas);
+        }
+
+        const config = {
+            type: 'line',
+            data: dados,
+        };
+
+        let myChart = new Chart(
+            document.getElementById(`myChartCanvas`),
+            config
+        );
     }
+
 </script>

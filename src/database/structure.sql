@@ -10,6 +10,19 @@ CREATE TABLE tb_usuario_leitor(
     at_senha             VARCHAR(100)  NOT NULL
 ) AUTO_INCREMENT = 1000;
 
+CREATE TABLE tb_pontuacao_usuario(
+	at_idPontuacao   INT AUTO_INCREMENT,
+    at_fk_idUsuario  INT,
+    at_Pontuacao     INT,
+    
+    CONSTRAINT pkComposta_pontuacao_usuario
+		PRIMARY KEY (at_idPontuacao, at_fk_idUsuario),
+        
+	CONSTRAINT fk_idUsuario_pontuacao_usuario
+		FOREIGN KEY (at_fk_idUsuario)
+			REFERENCES tb_usuario_leitor(at_idUsuario)
+);
+
 CREATE TABLE tb_sessao_concentracao(
 	at_idSessao        INT        AUTO_INCREMENT,
     at_fk_idUsuario    INT,
@@ -106,7 +119,7 @@ CREATE VIEW vw_status_livro_leitura AS
         livro.at_nome            AS nome,
         livro.at_autor           AS autor,
         livro.at_paginas_total   AS paginasTotal,
-        (SUM(leitura.at_paginas_lidas)/livro.at_paginas_total)*100 AS porcentagemLida,
+        concat(round((SUM(leitura.at_paginas_lidas)/livro.at_paginas_total)*100, 0), '%') AS porcentagemLida,
         (CASE
 			WHEN (SUM(leitura.at_paginas_lidas)/livro.at_paginas_total)*100 >= 100 THEN 'Concluído'
 			WHEN (SUM(leitura.at_paginas_lidas)/livro.at_paginas_total)*100 = 0 THEN 'A começar'
@@ -119,3 +132,11 @@ CREATE VIEW vw_status_livro_leitura AS
     ON 
         (livro.at_fk_idUsuario, livro.at_idLivro) = (leitura.at_fk_idUsuario, at_fk_idLivro)
     GROUP BY 1, 2;
+    
+CREATE VIEW vw_ranking AS
+	SELECT 
+		ROW_NUMBER() OVER () AS ranking, 
+        at_fk_idUsuario AS idUsuario, 
+        at_Pontuacao AS pontos
+	FROM tb_pontuacao_usuario 
+    ORDER BY 3 DESC;

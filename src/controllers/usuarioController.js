@@ -1,4 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
+var pontuacaoModel = require("../models/pontuacaoModel");
 
 function pesquisarUsername(req, res) {
     var username = req.body.usernameServer;
@@ -61,6 +62,19 @@ function cadastrar(req, res) {
         .then(
             function (resultado) {
                 res.status(200).json(resultado);
+
+                usuarioModel.autenticar(username, senha)
+                    .then(
+                        function (resultadoAutenticar) {
+                            pontuacaoModel.iniciarPontuacao(resultadoAutenticar[0].id);
+                        }
+                    )
+                    .catch(
+                        function (erro) {
+                            console.log(erro);
+                        }
+                    )
+                ;
             }
         )
         .catch(

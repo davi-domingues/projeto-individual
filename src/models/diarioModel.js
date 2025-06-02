@@ -27,7 +27,7 @@ function listarLivrosPorId(idUsuario) {
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-}
+};
 
 module.exports = {
     cadastrarLivro,

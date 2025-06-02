@@ -1,4 +1,5 @@
 var dashboardModel = require("../models/dashboardModel");
+var pontuacaoModel = require("../models/pontuacaoModel");
 
 function buscarTempoRecorde(req, res) {
     var idUsuario = req.params.idUsuario;
@@ -6,7 +7,11 @@ function buscarTempoRecorde(req, res) {
     dashboardModel.buscarTempoRecorde(idUsuario)
     .then(
         function (resultado) {
-            res.status(200).json(resultado);
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
         }
     )
     .catch(
@@ -27,7 +32,11 @@ function buscarLivrosConcluidos(req, res) {
     dashboardModel.buscarLivrosConcluidos(idUsuario)
     .then(
         function (resultado) {
-            res.status(200).json(resultado);
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
         }
     )
     .catch(
@@ -48,7 +57,11 @@ function buscarUltimoLivro(req, res) {
     dashboardModel.buscarUltimoLivro(idUsuario)
     .then(
         function (resultado) {
-            res.status(200).json(resultado);
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
         }
     )
     .catch(
@@ -63,8 +76,112 @@ function buscarUltimoLivro(req, res) {
     )
 };
 
+function buscarTempoPorDia(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    dashboardModel.buscarTempoPorDia(idUsuario)
+    .then(
+        function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+function buscarPaginasPorDia(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    dashboardModel.buscarPaginasPorDia(idUsuario)
+    .then(
+        function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+function buscarRankingPorUsuario(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    dashboardModel.buscarRankingPorUsuario(idUsuario)
+    .then(
+        function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+function buscarRanking(req, res) {
+    dashboardModel.buscarRanking()
+    .then(
+        function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    )
+};
+
+
+
 module.exports = {
     buscarTempoRecorde,
     buscarLivrosConcluidos,
-    buscarUltimoLivro
+    buscarUltimoLivro,
+    buscarTempoPorDia,
+    buscarPaginasPorDia,
+    buscarRankingPorUsuario,
+    buscarRanking
 };

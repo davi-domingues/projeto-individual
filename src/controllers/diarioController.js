@@ -1,4 +1,5 @@
 var diarioModel = require("../models/diarioModel");
+var pontuacaoModel = require("../models/pontuacaoModel");
 
 function cadastrarLivro(req, res) {
     var idUsuario = req.body.idUsuarioServer;
@@ -15,6 +16,7 @@ function cadastrarLivro(req, res) {
         .then(
             function (resultado) {
                 res.status(200).json(resultado);
+                pontuacaoModel.adicionarPontuacao(idUsuario, 20);
             }
         )
         .catch(
@@ -29,6 +31,7 @@ function cadastrarLivro(req, res) {
         )
     ;
 
+    
 };
 
 function registrarLeitura(req, res) {
@@ -46,6 +49,7 @@ function registrarLeitura(req, res) {
         .then(
             function (resultado) {
                 res.status(200).json(resultado);
+                pontuacaoModel.adicionarPontuacao(idUsuario, paginasLidas/10);
             }
         )
         .catch(

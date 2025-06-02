@@ -126,4 +126,6 @@
     dashboardCard.addEventListener("click", () => { window.location = "./dashboard.html" });
     forumCard.addEventListener("click", () => { window.location = "./forum.html" });
     relogioCard.addEventListener("click", () => { window.location = "./sessao.html" });
+    const nomeBoasVindas = document.getElementById('nome_boasVindas');
+    nomeBoasVindas.innerHTML = `Boas vindas ${sessionStorage.NOME_USUARIO}!`;
 </script>

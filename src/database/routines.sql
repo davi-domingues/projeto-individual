@@ -58,3 +58,21 @@ CREATE PROCEDURE registrar_sessao(idUsuario INT, tempo TIME)
 		INSERT INTO tb_sessao_concentracao VALUES (default, idUsuario, default, tempo);
 	END$$
 DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS adicionar_pontuacao;
+CREATE PROCEDURE adicionar_pontuacao(idUsuario INT, pontuacao INT)
+	BEGIN
+		DECLARE pontuacao_antiga INT;
+        SET pontuacao_antiga = (SELECT at_Pontuacao FROM tb_pontuacao_usuario WHERE at_fk_idUsuario = idUsuario);
+        UPDATE tb_pontuacao_usuario SET at_Pontuacao = (pontuacao + pontuacao_antiga) WHERE at_fk_idUsuario = idUsuario;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS iniciar_pontuacao;
+CREATE PROCEDURE iniciar_pontuacao(idUsuario INT)
+	BEGIN
+		INSERT INTO tb_pontuacao_usuario VALUES (default, idUsuario, 0);
+	END$$
+DELIMITER ;

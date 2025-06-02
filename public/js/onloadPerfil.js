@@ -6,11 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const nome = document.getElementById('nomeSession');
         const email = document.getElementById('emailSession');
         const username = document.getElementById('usernameSession');
-        const nomeBoasVindas = document.getElementById('nome_boasVindas');
 
         nome.innerHTML = sessionStorage.NOME_USUARIO;
         email.innerHTML = sessionStorage.EMAIL_USUARIO;
         username.innerHTML = sessionStorage.USERNAME_USUARIO;
-        nomeBoasVindas.innerHTML = `Boas vindas ${sessionStorage.NOME_USUARIO}!`;
     }
 })
