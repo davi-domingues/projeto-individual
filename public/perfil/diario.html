@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="perfil" onload="listarLivros()">
+<body class="perfil">
     
     <header>
 
@@ -85,37 +85,17 @@
                     <div class="" id="pagina_cadastroLivro" style="display: none;">
                         <h3>Cadaste um novo livro aqui!</h3>
                         <div>
-                            <label for="ipt_nome">Nome*</label>
+                            <label for="ipt_nome">Nome</label>
                             <br><br>
                             <input type="text" id="ipt_nome" required>
                             <br><br>
-                            <label for="ipt_autor">Autor*</label>
+                            <label for="ipt_autor">Autor</label>
                             <br><br>
                             <input type="text" id="ipt_autor" required>
                             <br><br>
-                            <label for="ipt_paginas">Total de páginas*</label>
+                            <label for="ipt_paginas">Total de páginas</label>
                             <br><br>
                             <input type="number" id="ipt_paginas" required>
-                            <br><br>
-                            <label for="ipt_editora">Editora</label>
-                            <br><br>
-                            <input type="text" id="ipt_editora">
-                            <br><br>
-                            <label for="ipt_genero">Genero</label>
-                            <br><br>
-                            <input type="text" id="ipt_genero">
-                            <br><br>
-                            <label for="ipt_ano">Ano</label>
-                            <br><br>
-                            <input type="text" id="ipt_ano">
-                            <br><br>
-                            <label for="ipt_isbn">ISBN</label>
-                            <br><br>
-                            <input type="text" id="ipt_isbn">
-                            <br><br>
-                            <label for="ipt_sinopse">Sinopse</label>
-                            <br><br>
-                            <textarea id="ipt_sinopse" cols="50" rows="5" style="resize: none"></textarea>
                             <br><br>
                             <button onclick="cadastrarLivro()" id="ipt_enviarLivro">Enviar</button>
                         </div>
@@ -165,11 +145,6 @@
         const nome = ipt_nome.value;
         const autor = ipt_autor.value;
         const paginas = ipt_paginas.value;
-        const editora = ipt_editora.value;
-        const genero = ipt_genero.value;
-        const ano = ipt_ano.value;
-        const isbn = ipt_isbn.value;
-        const sinopse = ipt_sinopse.value;
 
         if (nome == '' || autor == '' || paginas == '') {
             alert('Preencha os campos obrigatórios antes de cadastrar o livro!')
@@ -185,12 +160,7 @@
                 idUsuarioServer: idUsuario,
                 nomeServer: nome,
                 autorServer: autor,
-                paginasServer: paginas,
-                editoraServer: editora,
-                generoServer: genero,
-                anoServer: ano,
-                isbnServer: isbn,
-                sinopseServer: sinopse
+                paginasServer: paginas
             }),
         })
         .then(function (resposta) {
@@ -198,7 +168,10 @@
             console.log(resposta.body);
 
             if (resposta.ok) {
-                alert('Cadastrado com sucesso!')
+                alert('Cadastrado com sucesso!');
+                ipt_nome.value = '';
+                ipt_autor.value = '';
+                ipt_paginas.value = '';
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             };
@@ -217,6 +190,15 @@
         const paginasLidas = ipt_paginasLidas.value;
         const comentario = ipt_comentario.value;
 
+        if (idLivro == '') {
+            alert('Selecione um livro ou cadastre um novo antes de registrar uma leitura');
+            return false;
+        };
+        if (paginasLidas == '') {
+            alert('Informe a quantidade de páginas que foram lidas');
+            return false;
+        };
+
         fetch("/diario/registrarLeitura", {
             method: "POST",
             headers: {
@@ -234,7 +216,10 @@
             console.log(resposta.body);
 
             if (resposta.ok) {
-                alert('Cadastrado com sucesso!')
+                alert('Cadastrado com sucesso!');
+                ipt_livro.value = '';
+                ipt_paginasLidas.value = '';
+                ipt_comentario.value = '';
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             };
@@ -247,16 +232,27 @@
     };
 
     function listarLivros() {
+        ipt_livro.innerHTML = '';
         fetch(`/diario/listarLivros/${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
             .then((resposta) => {
-                resposta.json().then((livros) => {
-                    livros.forEach((livro) => {
-                        listaLivrosCadastrados.push(livro);
-                        const option = ipt_livro.appendChild(document.createElement("option"));
-                        option.textContent = `${livro.at_nome} - ${livro.at_autor} (${livro.at_paginas_total} páginas)`;
-                        option.value = livro.at_idLivro;
+                if (resposta.status == 204) {
+                    const option = ipt_livro.appendChild(document.createElement("option"));
+                    option.textContent = `Você ainda não possui livros`;
+                    option.value = '';
+                }
+                if (resposta.status == 200) {
+                    const option = ipt_livro.appendChild(document.createElement("option"));
+                    option.textContent = `Selecione um livro`;
+                    option.value = '';
+                    resposta.json().then((livros) => {
+                        livros.forEach((livro) => {
+                            listaLivrosCadastrados.push(livro);
+                            const option = ipt_livro.appendChild(document.createElement("option"));
+                            option.textContent = `${livro.at_nome} - ${livro.at_autor} (${livro.at_paginas_total} páginas)`;
+                            option.value = livro.at_idLivro;
+                        })
                     })
-                })
+                }
             })
             .catch((resposta) => {
                 console.log(`#ERRO: ${resposta}`)
@@ -278,6 +274,7 @@
         habilitar(button_voltar);
         habilitar(pagina_registroLeitura);
         desabilitar(buttons_inicial);
+        listarLivros();
     };
     function voltarPagina() {
         desabilitar(pagina_conteudo);

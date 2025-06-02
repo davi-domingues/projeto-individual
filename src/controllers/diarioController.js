@@ -5,23 +5,13 @@ function cadastrarLivro(req, res) {
     var nome = req.body.nomeServer;
     var autor = req.body.autorServer;
     var paginas = req.body.paginasServer;
-    var editora = req.body.editoraServer;
-    var genero = req.body.generoServer;
-    var ano = req.body.anoServer;
-    var isbn = req.body.isbnServer;
-    var sinopse = req.body.sinopseServer;
     
     idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
     nome == undefined ? res.status(400).send("nome está undefined") :
     autor == undefined ? res.status(400).send("autor está undefined") :
     paginas == undefined ? res.status(400).send("paginas está undefined") :
-    editora == undefined ? res.status(400).send("editora está undefined") :
-    genero == undefined ? res.status(400).send("genero está undefined") :
-    ano == undefined ? res.status(400).send("ano está undefined") :
-    isbn == undefined ? res.status(400).send("isbn está undefined") :
-    sinopse == undefined ? res.status(400).send("sinopse está undefined") :
 
-    diarioModel.cadastrarLivro(idUsuario, nome, autor, paginas, editora, genero, ano, isbn, sinopse)
+    diarioModel.cadastrarLivro(idUsuario, nome, autor, paginas)
         .then(
             function (resultado) {
                 res.status(200).json(resultado);

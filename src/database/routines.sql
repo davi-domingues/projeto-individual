@@ -12,11 +12,11 @@ DELIMITER ;
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS fnc_substituirVazio;
-CREATE FUNCTION fnc_substituirVazio(termo_entrada VARCHAR(45))
+CREATE FUNCTION fnc_substituirVazio(termo_entrada VARCHAR(300))
 	RETURNS VARCHAR(100)
 	DETERMINISTIC
 	BEGIN
-		DECLARE termo_saida VARCHAR(100);
+		DECLARE termo_saida VARCHAR(300);
 		SET termo_saida = 
 			(CASE 
 				WHEN termo_entrada = '' THEN null
@@ -37,9 +37,9 @@ DELIMITER ;
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS cadastrar_livro;
-CREATE PROCEDURE cadastrar_livro(idUsuario INT, nome VARCHAR(45), autor VARCHAR(45), paginas INT, ano YEAR, editora VARCHAR(45), genero VARCHAR(45), isbn VARCHAR(45), sinopse VARCHAR(280))
+CREATE PROCEDURE cadastrar_livro(idUsuario INT, nome VARCHAR(45), autor VARCHAR(45), paginas INT)
 	BEGIN
-		INSERT INTO tb_livro_individual VALUES (default, idUsuario, nome, autor, paginas, ano, editora, genero, isbn, sinopse);
+		INSERT INTO tb_livro_individual VALUES (default, idUsuario, nome, autor, paginas);
 	END$$
 DELIMITER ;
 

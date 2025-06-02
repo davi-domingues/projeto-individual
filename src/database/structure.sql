@@ -30,11 +30,6 @@ CREATE TABLE tb_livro_individual(
     at_nome           VARCHAR(45)   NOT NULL,
     at_autor          VARCHAR(45)   NOT NULL,
     at_paginas_total  INT           NOT NULL,
-    at_ano            YEAR,
-    at_editora        VARCHAR(45),
-    at_genero         VARCHAR(45),
-    at_isbn           VARCHAR(45),
-    at_sinopse        VARCHAR(280),
     
     CONSTRAINT pkComposta_livro_individual
 		PRIMARY KEY (at_idLivro, at_fk_idUsuario),
@@ -80,12 +75,7 @@ CREATE VIEW vw_livro AS
 		at_idLivro         AS idLivro,
         at_nome            AS nome,
         at_autor           AS autor,
-        at_paginas_total   AS paginasTotal,
-        at_ano             AS ano,
-        at_editora         AS editora,
-        at_genero          AS genero,
-        at_isbn            AS isbn,
-        at_sinopse         AS sinopse
+        at_paginas_total   AS paginasTotal
     FROM
         tb_livro_individual;
 

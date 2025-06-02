@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="login">
+<body class="login" onload="autopreencherLogin()">
 
     <header class="header flex">
         <a href="index.html" class="logo flex">
@@ -112,5 +112,12 @@
         .catch(function (erro){
             console.log(erro);
         })
+    };
+
+    function autopreencherLogin() {
+        if (sessionStorage.LOGIN_CADASTRADO != undefined) {
+            login_usuario.value = sessionStorage.LOGIN_CADASTRADO;
+            sessionStorage.LOGIN_CADASTRADO = '';
+        };
     }
 </script>
