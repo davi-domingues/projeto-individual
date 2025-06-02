@@ -129,7 +129,7 @@
         .then((resposta) => {
             if (resposta.ok) {
                 console.log(resposta);
-                alert('Tempo salvo com sucesso! Parabéns pelo seu desempenho leitor(a)!')
+                alert(`Tempo salvo com sucesso! Parabéns pelo seu desempenho ${sessionStorage.NOME_USUARIO}`)
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             };
