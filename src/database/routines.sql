@@ -76,3 +76,14 @@ CREATE PROCEDURE iniciar_pontuacao(idUsuario INT)
 		INSERT INTO tb_pontuacao_usuario VALUES (default, idUsuario, 0);
 	END$$
 DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS buscar_livros_concluidos;
+CREATE PROCEDURE buscar_livros_concluidos(idUsuarioBusca INT)
+	BEGIN
+		SELECT COUNT(idLivro) AS livrosLidos FROM vw_status_livro_leitura WHERE idUsuario = idUsuarioBusca GROUP BY status HAVING status = 'Concluído';
+	END$$
+DELIMITER ;
+
+CALL buscar_livros_concluidos(1008);
+

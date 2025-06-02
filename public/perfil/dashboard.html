@@ -103,18 +103,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="line-chart">
-                                <canvas id="myChartCanvas"></canvas>
+                            <div class="line-chart" id="graficoLinha">
+                                <canvas id="myChartCanvas-Linha"></canvas>
                             </div>
                         </div>
                         <div class="right-box">
+                            <button onclick="mostrarRanking()">Ranking</button>
+                            <button onclick="mostrarPodium()">Podium</button>
                             <div class="content" style="display: none;" id="podium">
-                                <canvas>podium</canvas>
-                                <button onclick="mostrarRanking()">Ranking</button>
+                                <canvas id="myChartCanvas-Podium">podium</canvas>
                             </div>
                             <div class="content" style="display: block;" id="ranking">
-                                ranking
-                                <button onclick="mostrarPodium()">Podium</button>
                             </div>
                         </div>
                     </div>
@@ -186,7 +185,7 @@
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
                     console.log(json)
-                    livros_concluidos.innerHTML = json[0].qtd_livrosLidos
+                    livros_concluidos.innerHTML = json[0][0].livrosLidos
                 })
             }
         })
@@ -223,7 +222,8 @@
                     json.forEach((user) => {
                         const div = ranking.appendChild(document.createElement("div"));
                         div.innerHTML = `#${user.ranking} @${user.username} (${user.pontos} pontos)`
-                    })
+                    });
+                    plotarPodium(json);
                 })
             }
         })
@@ -272,7 +272,7 @@
             console.log(resposta)
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
             if (resposta.status == 204) {
-
+                document.getElementById('graficoLinha').textContent = 'Sem registros'
             };
             if (resposta.status == 200) {
                 resposta.json().then(function (resposta) {
@@ -307,7 +307,9 @@
         console.log(resposta)
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
-            labels.push(registro.dia);
+            var dataFormatada = registro.data.split('T');
+            dataFormatada = dataFormatada[0].split('-');
+            labels.push(`${dataFormatada[2]}/${dataFormatada[1]}/${dataFormatada[0]}`);
             dados.datasets[0].data.push(registro.somaPaginasLidas);
         }
 
@@ -317,7 +319,31 @@
         };
 
         let myChart = new Chart(
-            document.getElementById(`myChartCanvas`),
+            document.getElementById(`myChartCanvas-Linha`),
+            config
+        );
+    };
+
+    function plotarPodium(resposta) {
+
+        let dados = {
+            labels: [`#2 ${resposta[1].username}`,`#1 ${resposta[0].username}`,`#3 ${resposta[2].username}`],
+            datasets: [{
+                label: 'Pontos',
+                data: [resposta[1].pontos, resposta[0].pontos, resposta[2].pontos],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: dados,
+        };
+
+        let myChart = new Chart(
+            document.getElementById(`myChartCanvas-Podium`),
             config
         );
     }

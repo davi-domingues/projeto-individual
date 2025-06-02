@@ -32,7 +32,7 @@ function buscarLivrosConcluidos(req, res) {
     dashboardModel.buscarLivrosConcluidos(idUsuario)
     .then(
         function (resultado) {
-            if (resultado.length > 0) {
+            if (resultado[0].length > 0) {
                 res.status(200).json(resultado);
             } else {
                 res.status(204).send("Nenhum resultado encontrado!")

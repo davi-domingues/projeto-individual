@@ -8,7 +8,7 @@ function buscarTempoRecorde(idUsuario) {
 };
 
 function buscarLivrosConcluidos(idUsuario) {
-    var instrucaoSql = `SELECT COUNT(idLivro) AS qtd_livrosLidos FROM vw_status_livro_leitura WHERE idUsuario = ${idUsuario} GROUP BY status HAVING status = 'Concluído'`;
+    var instrucaoSql = `CALL buscar_livros_concluidos(${idUsuario})`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -22,14 +22,14 @@ function buscarUltimoLivro(idUsuario) {
 };
 
 function buscarTempoPorDia(idUsuario) {
-    var instrucaoSql = `SELECT SUM(TIME(tempo)) AS tempoAcumulado, DATE(dtRegistro) AS dia FROM vw_sessao WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2`;
+    var instrucaoSql = `SELECT SUM(TIME(tempo)) AS tempoAcumulado, DATE(dtRegistro) AS data FROM vw_sessao WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 };
 
 function buscarPaginasPorDia(idUsuario) {
-    var instrucaoSql = `SELECT SUM(paginasLidas) AS somaPaginasLidas, DATE(dtRegistro) AS dia FROM vw_leitura WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2`;
+    var instrucaoSql = `SELECT SUM(paginasLidas) AS somaPaginasLidas, DATE(dtRegistro) AS data FROM vw_leitura WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
