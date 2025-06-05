@@ -1,5 +1,6 @@
 var usuarioModel = require("../models/usuarioModel");
 var pontuacaoModel = require("../models/pontuacaoModel");
+var streakModel = require("../models/streakModel");
 
 function pesquisarUsername(req, res) {
     var username = req.body.usernameServer;
@@ -67,6 +68,7 @@ function cadastrar(req, res) {
                     .then(
                         function (resultadoAutenticar) {
                             pontuacaoModel.iniciarPontuacao(resultadoAutenticar[0].id);
+                            streakModel.iniciarStreak(resultadoAutenticar[0].id);
                         }
                     )
                     .catch(

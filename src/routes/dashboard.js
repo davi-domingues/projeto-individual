@@ -3,6 +3,10 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
+router.get("/streak/:idUsuario", function (req, res) {
+    dashboardController.buscarStreak(req, res);
+});
+
 router.get("/tempoRecorde/:idUsuario", function (req, res) {
     dashboardController.buscarTempoRecorde(req, res);
 });

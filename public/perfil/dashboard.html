@@ -83,6 +83,7 @@
                             <div class="kpis flex">
                                 <div class="kpi-box1">
                                     <h4>streak dias</h4>
+                                    <span id="streak"></span>
                                 </div>
                                 <div class="kpi-box1">
                                     <h4>ultimo livro</h4>
@@ -159,6 +160,33 @@
     function plotarDashboard() {
         const idUsuario = sessionStorage.ID_USUARIO;
 
+        fetch(`/dashboard/streak/${idUsuario}`,  { cache: 'no-store' })
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status == 204) {
+                streak.innerHTML = 's/ registro'
+            };
+            if (resposta.status == 200) {
+                resposta.json().then((json) => {
+                    console.log(json)
+                    const streakPositivo = json[0][0].streakPositivo;
+                    const streakNegativo = json[0][0].streakNegativo;
+
+                    if (streakPositivo > streakNegativo) {
+                        streak.innerHTML = `Você está a  ${streakPositivo} dia(s) lendo!`;
+                    } else if (streakPositivo < streakNegativo) {
+                        streak.innerHTML = `Você está a  ${streakNegativo} dia(s) sem ler :(`;
+                    } else {
+                        streak.innerHTML = `s/ registro`;
+                    };
+
+                })
+            }
+        })
+        .catch((resposta) => {
+            console.log(`#ERRO: ${resposta}`)
+        });
+        
         fetch(`/dashboard/tempoRecorde/${idUsuario}`,  { cache: 'no-store' })
         .then((resposta) => {
             console.log(resposta)

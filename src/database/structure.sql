@@ -13,12 +13,26 @@ CREATE TABLE tb_usuario_leitor(
 CREATE TABLE tb_pontuacao_usuario(
 	at_idPontuacao   INT AUTO_INCREMENT,
     at_fk_idUsuario  INT,
-    at_Pontuacao     INT,
+    at_pontuacao     INT,
     
     CONSTRAINT pkComposta_pontuacao_usuario
 		PRIMARY KEY (at_idPontuacao, at_fk_idUsuario),
         
 	CONSTRAINT fk_idUsuario_pontuacao_usuario
+		FOREIGN KEY (at_fk_idUsuario)
+			REFERENCES tb_usuario_leitor(at_idUsuario)
+);
+
+CREATE TABLE tb_streak_usuario(
+	at_idStreak         INT       AUTO_INCREMENT,
+    at_fk_idUsuario     INT,
+    at_streak           INT,
+    at_ultimo_registro  DATETIME  DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT pkComposta_pontuacao_usuario
+		PRIMARY KEY (at_idStreak, at_fk_idUsuario),
+        
+	CONSTRAINT fk_idUsuario_streak_usuario
 		FOREIGN KEY (at_fk_idUsuario)
 			REFERENCES tb_usuario_leitor(at_idUsuario)
 );

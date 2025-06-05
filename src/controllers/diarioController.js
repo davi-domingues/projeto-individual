@@ -1,5 +1,6 @@
 var diarioModel = require("../models/diarioModel");
 var pontuacaoModel = require("../models/pontuacaoModel");
+var streakModel = require("../models/streakModel");
 
 function cadastrarLivro(req, res) {
     var idUsuario = req.body.idUsuarioServer;
@@ -50,6 +51,7 @@ function registrarLeitura(req, res) {
             function (resultado) {
                 res.status(200).json(resultado);
                 pontuacaoModel.adicionarPontuacao(idUsuario, paginasLidas/10);
+                streakModel.atualizarStreak(idUsuario);
             }
         )
         .catch(

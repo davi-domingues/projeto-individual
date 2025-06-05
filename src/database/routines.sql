@@ -85,5 +85,44 @@ CREATE PROCEDURE buscar_livros_concluidos(idUsuarioBusca INT)
 	END$$
 DELIMITER ;
 
-CALL buscar_livros_concluidos(1008);
+DELIMITER $$
+DROP PROCEDURE IF EXISTS iniciar_streak;
+CREATE PROCEDURE iniciar_streak(idUsuario INT)
+	BEGIN
+		INSERT INTO tb_streak_usuario VALUE (default, idUsuario, 0, null);
+	END$$
+DELIMITER ;
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS atualizar_streak;
+CREATE PROCEDURE atualizar_streak(idUsuario INT)
+	BEGIN
+		UPDATE tb_streak_usuario SET 
+			at_streak =
+				(CASE
+					WHEN DATE(at_ultimo_registro) = DATE(CURRENT_TIMESTAMP) THEN at_streak
+					WHEN DATE(at_ultimo_registro) + 1 = DATE(CURRENT_TIMESTAMP) THEN at_streak + 1 
+					ELSE 1 
+				END),
+			at_ultimo_registro = CURRENT_TIMESTAMP
+		WHERE at_fk_idUsuario = idUsuario;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS buscar_streak;
+CREATE PROCEDURE buscar_streak(idUsuario INT)
+	BEGIN
+		SELECT 
+			(CASE
+				WHEN DATE(at_ultimo_registro) = DATE(CURRENT_TIMESTAMP) THEN at_streak
+                ELSE 0
+            END) AS streakPositivo,
+			(CASE
+				WHEN DATE(at_ultimo_registro) < DATE(CURRENT_TIMESTAMP) THEN DATEDIFF(CURRENT_TIMESTAMP, at_ultimo_registro)
+                ELSE 0
+            END) AS streakNegativo
+		FROM tb_streak_usuario
+		WHERE at_fk_idUsuario = idUsuario;
+	END$$
+DELIMITER ;
