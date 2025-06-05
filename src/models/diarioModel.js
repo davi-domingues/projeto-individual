@@ -23,7 +23,7 @@ function registrarLeitura(idLivro, idUsuario, paginasLidas, comentario) {
 };
 
 function listarLivrosPorId(idUsuario) {
-    var instrucaoSql = `SELECT * FROM tb_livro_individual WHERE at_fk_idUsuario = ${idUsuario}`;
+    var instrucaoSql = `SELECT * FROM vw_livro WHERE idUsuario = ${idUsuario}`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -248,8 +248,8 @@
                         livros.forEach((livro) => {
                             listaLivrosCadastrados.push(livro);
                             const option = ipt_livro.appendChild(document.createElement("option"));
-                            option.textContent = `${livro.at_nome} - ${livro.at_autor} (${livro.at_paginas_total} páginas)`;
-                            option.value = livro.at_idLivro;
+                            option.textContent = `${livro.nome} - ${livro.autor} (${livro.paginasTotal} páginas)`;
+                            option.value = livro.idLivro;
                         })
                     })
                 }
