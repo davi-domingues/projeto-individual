@@ -32,12 +32,13 @@ h1, h2, h3 {
 
 .flex {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
 
 .logo {
+    flex-direction: row;
     justify-content: center;
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
@@ -69,6 +70,7 @@ h1, h2, h3 {
 }
 
 .header{
+    flex-direction: row;
     width: 100%;
     height: 10vh;
     position: fixed;
@@ -82,6 +84,7 @@ h1, h2, h3 {
 }
 
 .navbar {
+    flex-direction: row;
     width: 30%;
 }
 
@@ -192,6 +195,7 @@ h1 {
         height: 20%;
     };
     .container {
+        flex-direction: row;
         width: 100%;
         height: 80%;
         justify-content: space-evenly
@@ -348,12 +352,16 @@ h1 {
 }
 
 .perfil {
+    flex-direction: row;
     font-size: 17rem;
     margin: 0;
     width: 100%;
     height: 100vh;
     color: var(--caramelo);
     /* *{border: 1px solid black;}; */
+    *{
+        flex-direction: row;
+    };
     .navbar {
         background-color: var(--marrom_claro);
         font-size: 10rem;
@@ -472,6 +480,7 @@ h1 {
             text-align: center
         };
         .main-content {
+    /* *{border: 1px solid gray;}; */
             width: 100%;
             height: 90%;
             .left-box {
@@ -519,6 +528,7 @@ h1 {
     font-size: 10rem;
     border-top: 1rem solid var(--marrom_café);
     * {
+        flex-direction: row;
         margin: 0;
         padding: 0rem 10rem;
     };
