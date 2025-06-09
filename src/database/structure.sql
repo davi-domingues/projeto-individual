@@ -81,9 +81,41 @@ CREATE TABLE tb_leitura_diario (
 		FOREIGN KEY (at_fk_idLivro)
 			REFERENCES tb_livro_individual(at_idLivro),
             
-	CONSTRAINT fk_idUsuario
+	CONSTRAINT fk_idUsuario_leitura
 		FOREIGN KEY (at_fk_idUsuario)
 			REFERENCES tb_livro_individual(at_fk_idUsuario)
+);
+
+CREATE TABLE tb_forum_interacao (
+	at_idForum        INT           PRIMARY KEY AUTO_INCREMENT,
+    at_fk_idUsuario   INT,
+    at_topico         VARCHAR(45)   NOT NULL,
+	at_data_criacao   DATETIME      DEFAULT CURRENT_TIMESTAMP,
+
+	CONSTRAINT fk_idUsuario_forum
+		FOREIGN KEY (at_fk_idUsuario)
+			REFERENCES tb_usuario_leitor(at_idUsuario)
+);
+
+CREATE TABLE tb_comentario_forum (
+	at_idComentario             INT           AUTO_INCREMENT,
+	at_fk_idForum               INT,
+    at_fk_idUsuario             INT,
+    at_comentario               VARCHAR(280)  NOT NULL,
+    at_curtidas                 INT           DEFAULT 0,
+	at_data_postagem            DATETIME      DEFAULT CURRENT_TIMESTAMP,
+	at_data_ultima_atualizacao  DATETIME      DEFAULT CURRENT_TIMESTAMP,
+
+	CONSTRAINT pkComposta_comentario_forum
+		PRIMARY KEY (at_idComentario, at_fk_idForum, at_fk_idUsuario),
+        
+	CONSTRAINT fk_idForum_comentario
+		FOREIGN KEY (at_fk_idForum)
+			REFERENCES tb_forum_interacao(at_idForum),
+            
+	CONSTRAINT fk_idUsuario_comentario
+		FOREIGN KEY (at_fk_idUsuario)
+			REFERENCES tb_usuario_leitor(at_idUsuario)
 );
 
 CREATE VIEW vw_usuario AS
@@ -149,8 +181,27 @@ CREATE VIEW vw_status_livro_leitura AS
     
 CREATE VIEW vw_ranking AS
 	SELECT 
-		ROW_NUMBER() OVER () AS ranking, 
-        at_fk_idUsuario AS idUsuario, 
-        at_Pontuacao AS pontos
+		ROW_NUMBER() OVER ()   AS ranking, 
+        at_fk_idUsuario        AS idUsuario, 
+        at_Pontuacao           AS pontos
 	FROM tb_pontuacao_usuario 
     ORDER BY 3 DESC;
+
+CREATE VIEW vw_forum AS
+	SELECT 
+		at_idForum        AS idForum,
+		at_fk_idUsuario   AS idUsuario,
+		at_topico         AS topico,
+		at_data_criacao   AS dtCriacao
+	FROM tb_forum_interacao;
+    
+CREATE VIEW vw_comentario AS
+	SELECT 
+		at_idComentario             AS idComentario,
+		at_fk_idForum               AS idForum,
+		at_fk_idUsuario             AS idUsuario,
+		at_comentario               AS comentario,
+		at_curtidas                 AS curtidas,
+		at_data_postagem            AS dtPostagem,
+		at_data_ultima_atualizacao  AS dtAtualizacao
+	FROM tb_comentario_forum;

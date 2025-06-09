@@ -126,3 +126,66 @@ CREATE PROCEDURE buscar_streak(idUsuario INT)
 		WHERE at_fk_idUsuario = idUsuario;
 	END$$
 DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS criar_forum;
+CREATE PROCEDURE criar_forum(idUsuario INT, topico VARCHAR(45))
+	BEGIN
+		INSERT INTO tb_forum_interacao VALUES (default, idUsuario, topico, default);
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS deletar_forum;
+CREATE PROCEDURE deletar_forum(idForum INT)
+	BEGIN
+		DELETE FROM tb_comentario_forum WHERE at_fk_idForum = idForum AND at_idComentario > 0 AND at_fk_idUsuario > 0;
+		DELETE FROM tb_forum_interacao WHERE at_idForum = idForum;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS postar_comentario;
+CREATE PROCEDURE postar_comentario(idForum INT, idUsuario INT, comentario VARCHAR(280))
+	BEGIN
+		INSERT INTO tb_comentario_forum(at_fk_idForum, at_fk_idUsuario, at_comentario) VALUES (idForum, idUsuario, comentario);
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS excluir_comentario;
+CREATE PROCEDURE excluir_comentario(idComentario INT, idUsuario INT, idForum INT)
+	BEGIN
+		DELETE FROM tb_comentario_forum WHERE at_idComentario = idComentario AND at_fk_idUsuario = idUsuario AND at_fk_idForum = idForum;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS atualizar_comentario;
+CREATE PROCEDURE atualizar_comentario(idComentario INT, idUsuario INT, idForum INT, comentario VARCHAR(280))
+	BEGIN
+		UPDATE tb_comentario_forum 
+			SET 
+				at_comentario = comentario, 
+                at_data_ultima_atualizacao = CURRENT_TIMESTAMP 
+		WHERE at_idComentario = idComentario AND at_fk_idUsuario = idUsuario AND at_fk_idForum = idForum;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS atualizar_curtidas;
+CREATE PROCEDURE atualizar_curtidas(idComentario INT, idUsuario INT, idForum INT, acao VARCHAR(10))
+	BEGIN
+		UPDATE tb_comentario_forum 
+			SET 
+				at_curtidas = 
+					(CASE 
+						WHEN acao = 'curtir' THEN at_curtidas + 1
+                        WHEN acao = 'descurtir' THEN at_curtidas - 1
+                        ELSE at_curtidas
+					END)
+		WHERE at_idComentario = idComentario AND at_fk_idUsuario = idUsuario AND at_fk_idForum = idForum;
+	END$$
+DELIMITER ;
+
+
