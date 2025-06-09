@@ -513,6 +513,61 @@ h1 {
                 };
             };
         };
+    };
+    .diario {
+        /* *{
+            border: 1px solid black;
+        } */
+        .title {
+            text-align: center;
+            width: 100%;
+            height: 10%;
+        };
+        #pagina_inicial {
+            flex-direction: column;
+            width: 100%;
+            height: 90%;
+            text-align: center;
+            .main {
+                width: 100%;
+                height: 90%;
+                text-align: left;
+                .box {
+                    padding: 2%;
+                    width: 50%;
+                    height: 100%;
+                    flex-direction: column;
+                    justify-content: left;
+                    align-items: center
+                }
+            };
+            .buttons {
+                width: 100%;
+                height: 10%;
+                #buttons_inicial {
+                    justify-content: space-around;
+                    align-items: center;
+                    text-align: center;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        };
+        #pagina_conteudo {
+            width: 100%;
+            height: 90%;
+            flex-direction: column;
+            #pagina_cadastroLivro, #pagina_registroLeitura {
+                height: 90%;
+                justify-content: space-evenly;
+                flex-direction: column;
+            }
+            #button_voltar {
+                width: 100%;
+                height: 10%;
+            }
+
+        }
     }
 }
 

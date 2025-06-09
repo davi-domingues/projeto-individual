@@ -15,4 +15,8 @@ router.get("/listarLivros/:idUsuario", function (req, res) {
     diarioController.listarLivrosPorId(req, res);
 })
 
+router.get("/listarLeituras/:idUsuario/:idLivro", function (req, res) {
+    diarioController.listarLeiturasPorId(req, res);
+})
+
 module.exports = router;

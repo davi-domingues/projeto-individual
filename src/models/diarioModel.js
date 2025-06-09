@@ -29,8 +29,16 @@ function listarLivrosPorId(idUsuario) {
     return database.executar(instrucaoSql);
 };
 
+function listarLeiturasPorId(idLivro, idUsuario) {
+    var instrucaoSql = `SELECT * FROM vw_leitura WHERE idLivro = ${idLivro} AND idUsuario = ${idUsuario}`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+};
+
 module.exports = {
     cadastrarLivro,
     registrarLeitura,
-    listarLivrosPorId
+    listarLivrosPorId,
+    listarLeiturasPorId
 };

@@ -17,13 +17,13 @@
 
 </head>
 
-<body class="perfil">
+<body class="perfil" onload="exibirLivros()">
     
     <header>
 
     </header>
 
-    <main>
+    <main class="diario">
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
@@ -73,18 +73,35 @@
                 </div>
             </div>
             <div class="home flex">
-                <h1>Diário de Leitura</h1>
-                <div id="buttons_inicial" style="display: block;">
-                    <button onclick="paginaCadastrarLivro()">Cadastrar Novo Livro</button>
-                    <button onclick="paginaRegistrarLeitura()">Registrar uma leitura</button>
+                <div class="title">
+                    <h1>Diário de Leitura</h1>
                 </div>
-                <div id="pagina_conteudo" style="display: none;">
-                    <div id="button_voltar" style="display: none;">
-                        <button onclick="voltarPagina()">Voltar</button>
+                <div id="pagina_inicial" class="flex">
+                    <div class="main flex">
+                        <div class="box flex" id="exibir_livros">
+                            <h3>
+                                Seus Livros
+                            </h3>
+                            <div id="lista_livros" >Sem livros</div>
+                        </div>
+                        <div class="box flex" id="exibir_leituras">
+                            <h3>
+                                Suas Leituras
+                            </h3>
+                            <div id="lista_leituras">Escolha um livro</div>
+                        </div>
                     </div>
-                    <div class="" id="pagina_cadastroLivro" style="display: none;">
-                        <h3>Cadaste um novo livro aqui!</h3>
-                        <div>
+                    <div class="buttons">
+                        <div class="flex" id="buttons_inicial" style="display: flex;">
+                            <span class="button-container"><button onclick="paginaCadastrarLivro()">Cadastrar Novo Livro</button></span>
+                            <span  class="button-container"><button onclick="paginaRegistrarLeitura()">Registrar uma leitura</button></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="pagina_conteudo" class="" style="display: none;">
+                    <div class="flex" id="pagina_cadastroLivro" style="display: none;">
+                        <h3 class="">Cadaste um novo livro aqui!</h3>
+                        <div class="">
                             <label for="ipt_nome">Nome</label>
                             <br><br>
                             <input type="text" id="ipt_nome" required>
@@ -97,12 +114,12 @@
                             <br><br>
                             <input type="number" id="ipt_paginas" required>
                             <br><br>
-                            <button onclick="cadastrarLivro()" id="ipt_enviarLivro">Enviar</button>
+                            <span  class="button-container"><button onclick="cadastrarLivro()" id="ipt_enviarLivro">Enviar</button></span>
                         </div>
                     </div>
-                    <div id="pagina_registroLeitura" style="display: none;">
-                        <h3>Registre sua leitura aqui!</h3>
-                        <div>
+                    <div id="pagina_registroLeitura"  class="flex" style="display: none;">
+                        <h3 class="">Registre sua leitura aqui!</h3>
+                        <div class="">
                             <label for="ipt_livro">Livro</label>
                             <br><br>
                             <select id="ipt_livro"></select>
@@ -115,8 +132,11 @@
                             <br><br>
                             <textarea id="ipt_comentario" cols="50" rows="5" style="resize: none" maxlength="280"></textarea>
                             <br><br>
-                            <button onclick="registrarLeitura()" id="ipt_enviarLeitura">Enviar</button>
+                            <span class="button-container"><button onclick="registrarLeitura()" id="ipt_enviarLeitura">Enviar</button></span>
                         </div>
+                    </div>
+                    <div id="button_voltar" class="flex" style="display: none;">
+                        <span  class="button-container"><button onclick="voltarPagina()">Voltar</button></span>
                     </div>
                 </div>
             </div>
@@ -231,7 +251,7 @@
         });
     };
 
-    function listarLivros() {
+    function criarOptionsLivros() {
         ipt_livro.innerHTML = '';
         fetch(`/diario/listarLivros/${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
             .then((resposta) => {
@@ -258,7 +278,62 @@
                 console.log(`#ERRO: ${resposta}`)
             })
         ;
-    }
+    };
+
+    function exibirLivros() {
+        lista_livros.innerHTML = '';
+        fetch(`/diario/listarLivros/${sessionStorage.ID_USUARIO}`, { cache: 'no-store' })
+        .then((resposta) => {
+            if (resposta.status == 204) {
+                const div = lista_livros.appendChild(document.createElement("div"));
+                div.textContent = `Você ainda não possui livros`;
+                div.value = '';
+            }
+            if (resposta.status == 200) {
+                resposta.json().then((livros) => {
+                    livros.forEach((livro) => {
+                        listaLivrosCadastrados.push(livro);
+                        const div = lista_livros.appendChild(document.createElement("div"));
+                        div.textContent = `${livro.nome} - ${livro.autor} (${livro.paginasTotal} páginas)`;
+                        div.setAttribute("onclick", `listarLeituras(${livro.idLivro})`)
+                    })
+                })
+            }
+        })
+        .catch((resposta) => {
+            console.log(`#ERRO: ${resposta}`)
+        })
+        ;
+    };
+    
+    function listarLeituras(idLivro) {
+        lista_leituras.innerHTML = '';
+        fetch(`/diario/listarLeituras/${sessionStorage.ID_USUARIO}/${idLivro}`, { cache: 'no-store' })
+            .then((resposta) => {
+                if (resposta.status == 204) {
+                    const div = lista_leituras.appendChild(document.createElement("div"));
+                    div.textContent = `Você ainda não começou a ler esse livro. Registre uma leitura agora!`;
+                    div.value = '';
+                }
+                if (resposta.status == 200) {
+                    resposta.json().then((leituras) => {
+                        leituras.forEach((leitura) => {
+                            const div = lista_leituras.appendChild(document.createElement("div"));
+                            
+                            var dataFormatada = leitura.dtRegistro.split('T');
+                            dataFormatada = dataFormatada[0].split('-');
+                            dataFormatada = `${dataFormatada[2]}/${dataFormatada[1]}/${dataFormatada[0]}`;
+
+                            div.innerHTML = `<strong>(${dataFormatada}) Páginas: ${leitura.paginasLidas}</strong> <br> <strong>Comentario:</strong> <br> ${leitura.comentario}`;
+                        })
+                    })
+                }
+            })
+            .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+            })
+        ;
+    };
 </script>
 
 <script>
@@ -266,25 +341,26 @@
         habilitar(pagina_conteudo);
         habilitar(button_voltar);
         habilitar(pagina_cadastroLivro);
-        desabilitar(buttons_inicial);
+        desabilitar(pagina_inicial);
         
     };
     function paginaRegistrarLeitura() {
         habilitar(pagina_conteudo);
         habilitar(button_voltar);
         habilitar(pagina_registroLeitura);
-        desabilitar(buttons_inicial);
-        listarLivros();
+        desabilitar(pagina_inicial);
+        criarOptionsLivros();
     };
     function voltarPagina() {
         desabilitar(pagina_conteudo);
         desabilitar(button_voltar);
         desabilitar(pagina_registroLeitura);
         desabilitar(pagina_cadastroLivro);
-        habilitar(buttons_inicial);
+        habilitar(pagina_inicial);
+        exibirLivros();
     };
     function habilitar(idElement) {
-        idElement.style.display = 'block'
+        idElement.style.display = 'flex'
     };
     function desabilitar(idElement) {
         idElement.style.display = 'none'

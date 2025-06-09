@@ -87,8 +87,30 @@ function listarLivrosPorId(req, res) {
         });
 }
 
+function listarLeiturasPorId(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var idLivro = req.params.idLivro;
+
+    console.log(`Buscando leitura referentes ao livro ID ${idLivro} e usuário de ID ${idUsuario}`);
+
+    diarioModel.listarLeiturasPorId(idLivro, idUsuario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar os livros cadastrados.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrarLivro,
     registrarLeitura,
-    listarLivrosPorId
+    listarLivrosPorId,
+    listarLeiturasPorId
 };
