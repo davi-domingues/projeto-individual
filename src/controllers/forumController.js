@@ -1,35 +1,150 @@
 var forumModel = require("../models/forumModel");
+var pontuacaoModel = require("../models/pontuacaoModel");
 
 function listarForuns(req, res) {
-    forumModel.listarForuns(params).then().catch();
+    forumModel.listarForuns()
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar os livros cadastrados.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
 };
 
 function criarForum(req, res) {
-    forumModel.criarForum(params).then().catch();
+    const idUsuario = req.body.idUsuarioServer;
+    const topico = req.body.topicoServer;
+
+    idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
+    topico == undefined ? res.status(400).send("topico está undefined") :
+
+    forumModel.criarForum(idUsuario, topico)
+        .then(
+            function (resultado) {
+                res.status(200).json(resultado);
+                pontuacaoModel.adicionarPontuacao(idUsuario, 20);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+    ;
 };
 
 function excluirForum(req, res) {
-    forumModel.excluirForum(params).then().catch();
+    const idForum = req.params.idForum;
+    forumModel.excluirForum(idForum)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 };
 
 function listarComentarios(req, res) {
-    forumModel.listarComentarios(params).then().catch();
+    var idForum = req.params.idForum;
+
+    forumModel.listarComentarios(idForum)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar os livros cadastrados.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
 };
 
 function postarComentario(req, res) {
-    forumModel.postarComentario(params).then().catch();
+    const idForum = req.body.idForumServer;
+    const idUsuario = req.body.idUsuarioServer;
+    const comentario = req.body.comentarioServer;
+
+    idForum == undefined ? res.status(400).send("idForum está undefined") :
+    idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
+    comentario == undefined ? res.status(400).send("comentario está undefined") :
+
+    forumModel.postarComentario(idForum, idUsuario, comentario)
+        .then(
+            function (resultado) {
+                res.status(200).json(resultado);
+                pontuacaoModel.adicionarPontuacao(idUsuario, 10);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+    ;
 };
 
 function excluirComentario(req, res) {
-    forumModel.excluirComentario(params).then().catch();
+    const idComentario = req.params.idComentario;
+    const idUsuario = req.params.idUsuario;
+    const idForum = req.params.idForum;
+
+    forumModel.excluirComentario(idComentario, idUsuario, idForum)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 };
 
 function editarComentario(req, res) {
-    forumModel.editarComentario(params).then().catch();
+    const idComentario = req.params.idComentario;
+    const idUsuario = req.params.idUsuario;
+    const idForum = req.params.idForum;
+    const comentario = req.body.comentarioServer;
+
+    forumModel.editarComentario(idComentario, idUsuario, idForum, comentario)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 };
 
 function atualizarCurtidas(req, res) {
-    forumModel.atualizarCurtidas(params).then().catch();
+    forumModel.atualizarCurtidas(idComentario, idUsuario, idForum, acao).then().catch();
 };
 
 module.exports = {

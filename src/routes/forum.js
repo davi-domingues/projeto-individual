@@ -11,7 +11,7 @@ router.post("/criarForum", function (req, res) {
     forumController.criarForum(req, res);
 });
 
-router.delete("/excluirForum/:idUsuario/:idForum", function (req, res) {
+router.delete("/excluirForum/:idForum", function (req, res) {
     forumController.excluirForum(req, res);
 });
 

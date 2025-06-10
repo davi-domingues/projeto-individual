@@ -1,9 +1,10 @@
 var database = require("../database/config");
 
-function listarForuns(params) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", params);
+function listarForuns() {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():");
 
     var instrucaoSql = `
+        SELECT * FROM vw_forum
     `;
     
     console.log("Executando a instrução SQL: \n", instrucaoSql);
@@ -32,11 +33,11 @@ function excluirForum(idForum) {
     return database.executar(instrucaoSql);
 };
 
-function listarComentarios(params) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", params);
+function listarComentarios(idForum) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", idForum);
 
     var instrucaoSql = `
-        
+        SELECT * FROM vw_comentario WHERE idForum = ${idForum}
     `;
 
     console.log("Executando a instrução SQL: \n", instrucaoSql);

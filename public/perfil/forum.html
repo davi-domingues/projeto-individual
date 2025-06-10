@@ -17,13 +17,13 @@
 
 </head>
 
-<body class="perfil">
+<body class="perfil" onload="atualizarFeed()">
     
     <header>
 
     </header>
 
-    <main>
+    <main class="forum">
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
@@ -73,7 +73,71 @@
                 </div>
             </div>
             <div class="home flex">
-                <h1>Calculadora de tempo de leitura</h1>
+                <div class="title">
+                    <h1>Fórum</h1>
+                </div>
+                <div id="pagina_topicos" class="tela_exibicao flex">
+                    <div class="main flex">
+                        <div class="box flex" id="exibir_topicos">
+                            <h3>
+                                Tópicos
+                            </h3>
+                            <div id="lista_foruns" class="lista"></div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="flex" id="buttons_inicial" style="display: flex;">
+                            <span class="button-container"><button onclick="abrirModal(modal_novoTopico)">Abrir novo tópico</button></span>
+                        </div>
+                    </div>
+                    <dialog id="modal_novoTopico">
+                        <i class="fa-solid fa-circle-xmark icon" onclick="fecharModal(modal_novoTopico)"></i>
+                        <form id="form_topico" method="dialog" onsubmit="">
+                            <label>
+                                Título do tópico:
+                                <input name="ipt_topico" id="ipt_topico" maxlength="45" type="text">
+                            </label>
+                            <i class="fa-solid fa-paper-plane icon" onclick="publicarTopico()"></i>
+                        </form>
+                    </dialog>
+                </div>
+                <div id="pagina_comentario" class="tela_exibicao flex"
+                style="display: none;">
+                    <div class="main flex">
+                        <div class="box flex" id="exibir_livros">
+                            <h3>
+                                Comentários
+                            </h3>
+                            <div id="lista_comentarios" class="lista"></div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="flex" id="buttons_inicial" style="display: flex;">
+                            <span class="button-container"><button onclick="voltar()">Voltar</button></span>
+                            <span class="button-container"><button onclick="abrirModal(modal_novoComentario)">Novo Comentario</button></span>
+                        </div>
+                    </div>
+                    <dialog id="modal_novoComentario">
+                        <i class="fa-solid fa-circle-xmark icon" onclick="fecharModal(modal_novoComentario)"></i>
+                        <form id="form_novoComentario" method="dialog" onsubmit="">
+                            <label>
+                                Seu comentário:
+                                <textarea name="ipt_novoComentario" id="ipt_novoComentario" cols="50" rows="5" style="resize: none" maxlength="280"></textarea>
+                            </label>
+                            <i class="fa-solid fa-paper-plane icon" onclick="publicarComentario()"></i>
+                        </form>
+                    </dialog>
+                    <dialog id="modal_editarComentario">
+                        <i class="fa-solid fa-circle-xmark icon" onclick="fecharModal(modal_editarComentario)"></i>
+                        <form id="form_editarComentario" method="dialog" onsubmit="">
+                            <label>
+                                Edite seu comentário:
+                                <textarea name="ipt_editComentario" id="ipt_editComentario" cols="50" rows="5" style="resize: none" maxlength="280"></textarea>
+                            </label>
+                            <i id="btn_editarComentario" class="fa-solid fa-paper-plane icon" onclick=""></i>
+                        </form>
+                    </dialog>
+                </div>
             </div>
         </section>
     </main>
@@ -91,3 +155,260 @@
 
 <script src="../js/redirector.js"></script>
 <script src="../js/onloadPerfil.js"></script>
+<script src="../js/openClose.js"></script>
+
+<script>
+    function publicarTopico() {
+        const idUsuario = sessionStorage.ID_USUARIO;
+        const topico = ipt_topico.value;
+        
+        if (idUsuario == undefined) {
+            alert('Erro na sessão, logue-se novamente');
+            window.location.href = '/'
+            return false;
+        };
+        if (topico.length < 5) {
+            alert('Insira um tópico válido antes de postar');
+            return false;
+        };
+
+        fetch("/forum/criarForum", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+                topicoServer: topico
+            }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            console.log(resposta.body);
+
+            if (resposta.ok) {
+                alert('Cadastrado com sucesso!');
+                atualizarFeed();
+                form_topico.submit();
+                ipt_topico.value = '';
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            };
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            if (erro.status === 500) {alert('Site deconectado do servidor')};
+            console.log(`#ERRO ${erro}`)
+        });
+    };
+
+    function publicarComentario() {
+        const idForum = sessionStorage.TOPICO_ATUAL;
+        const idUsuario = sessionStorage.ID_USUARIO;
+        const comentario = ipt_novoComentario.value;
+
+        if (idUsuario == undefined) {
+            alert('Erro na sessão, logue-se novamente');
+            window.location.href = '/'
+            return false;
+        };
+        if (idForum == undefined) {
+            alert('Erro na seleção do tópico, escolha outro para comentar');
+            voltar();
+            return false;
+        };
+        if (comentario.length < 5) {
+            alert('Insira um comentário válido antes de postar');
+            return false;
+        };
+
+        fetch("/forum/postarComentario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idForumServer: idForum,
+                idUsuarioServer: idUsuario,
+                comentarioServer: comentario
+            }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            console.log(resposta.body);
+
+            if (resposta.ok) {
+                alert('Cadastrado com sucesso!');
+                listarComentarios(sessionStorage.TOPICO_ATUAL)
+                form_novoComentario.submit();
+                ipt_novoComentario.value = '';
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            };
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            if (erro.status === 500) {alert('Site deconectado do servidor')};
+            console.log(`#ERRO ${erro}`)
+        });
+    };
+
+    function atualizarFeed() {
+        fetch("/forum/listarForuns")
+            .then((resposta) => {
+                console.log(resposta)
+                lista_foruns.innerHTML = '';
+                if (resposta.status == 204) {
+                    const div = lista_foruns.appendChild(document.createElement("div"));
+                    div.textContent = `Ainda não existe nenhum tópico. Seja o primeiro a adicionar um!`;
+                }
+                if (resposta.status == 200) {
+                    resposta.json().then((foruns) => {
+                        foruns.forEach((forum) => {
+                            let dataFormatada = new Date(forum.dtCriacao);
+                            dataFormatada = dataFormatada.toLocaleDateString('pt-BR');
+
+                            let div = lista_foruns.appendChild(document.createElement("div"));
+                            div.classList.add("forum");
+                            let topico = div.appendChild(document.createElement("div"));
+                            topico.setAttribute("onclick", `listarComentarios(${forum.idForum})`);
+                            topico.textContent = `${forum.topico} - (Publicado: ${dataFormatada})`
+                            if (sessionStorage.ID_USUARIO == forum.idUsuario) {
+                                div.innerHTML += `<i class="fa-solid fa-trash-can icon" onclick="removerTopico(${forum.idForum})"></i>`
+                            }
+                        })
+                    })
+                }
+            })
+            .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+            })
+        ;
+    }
+
+    function removerTopico(idForum) {
+        fetch(`/forum/excluirForum/${idForum}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                atualizarFeed();
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    };
+
+    function removerComentario(idComentario) {
+        const idUsuario = sessionStorage.ID_USUARIO;
+        const idForum = sessionStorage.TOPICO_ATUAL;
+
+        fetch(`/forum/excluirComentario/${idUsuario}/${idForum}/${idComentario}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                listarComentarios(idForum);
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    };
+
+    function abrirEditor(idComentario, texto) {
+        console.log(idComentario)
+        console.log(texto)
+        btn_editarComentario.setAttribute("onclick", `editarComentario(${idComentario})`);
+        ipt_editComentario.value = texto;
+        abrirModal(modal_editarComentario);
+
+    }
+
+    function editarComentario(idComentario) {
+        const idUsuario = sessionStorage.ID_USUARIO;
+        const idForum = sessionStorage.TOPICO_ATUAL;
+        const comentario = ipt_editComentario.value
+
+        fetch(`/forum/editarComentario/${idUsuario}/${idForum}/${idComentario}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                comentarioServer: comentario
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                window.alert("Post editado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                btn_editarComentario.setAttribute("onclick", '');
+                ipt_editComentario.value = '';
+                listarComentarios(idForum);
+                fecharModal(modal_editarComentario)
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    };
+
+    function listarComentarios(idForum) {
+        sessionStorage.TOPICO_ATUAL = idForum;
+        desabilitar(pagina_topicos);
+        habilitar(pagina_comentario);
+
+        fetch(`/forum/listarComentarios/${idForum}`)
+            .then((resposta) => {
+                console.log(resposta)
+                lista_comentarios.innerHTML = '';
+                if (resposta.status == 204) {
+                    const div = lista_comentarios.appendChild(document.createElement("div"));
+                    div.textContent = `Ainda não existe nenhum comentário aqui. Seja o primeiro a adicionar um!`;
+                }
+                if (resposta.status == 200) {
+                    resposta.json().then((comentarios) => {
+                        comentarios.forEach((comentario) => {
+                            let dataFormatada = new Date(comentario.dtPostagem);
+                            dataFormatada = dataFormatada.toLocaleDateString('pt-BR');
+                            let div = lista_comentarios.appendChild(document.createElement("div"));
+                            div.classList.add("forum");
+                            let conteudo = div.appendChild(document.createElement("div"));
+                            conteudo.textContent = `${comentario.comentario} - (Publicado: ${dataFormatada})`
+                            if (sessionStorage.ID_USUARIO == comentario.idUsuario) {
+                                div.innerHTML += `
+                                <i class="fa-solid fa-trash-can icon" onclick="removerComentario(${comentario.idComentario})"></i>
+                                <i class="fa-solid fa-pen-to-square icon" onclick="abrirEditor(${comentario.idComentario}, '${comentario.comentario}')"></i>
+                                `
+                            }
+                        })
+                    })
+                }
+            })
+            .catch((resposta) => {
+                console.log(`#ERRO: ${resposta}`)
+            })
+        ;
+    };
+
+    function voltar() {
+        sessionStorage.removeItem('TOPICO_ATUAL');
+        desabilitar(pagina_comentario);
+        habilitar(pagina_topicos);
+    };
+</script>
