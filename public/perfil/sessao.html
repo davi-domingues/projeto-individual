@@ -84,6 +84,16 @@
                     <button onclick="salvarSessao()">Salvar</button>
                 </div>
             </div>
+            </div>
+                <div class="help-tag" onclick="abrirModal(sessao_help)">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <dialog id="sessao_help">
+                <div>
+                    <i class="fa-solid fa-circle-xmark icon close-button" onclick="fecharModal(sessao_help)"></i>
+                    <div class="frase-help">Aqui você pode utilizar o cronômetro ao seu favor. Marque o tempo e comece a ler, após a leitura não esqueça de salvar seu desempenho para acompanhar seus recorde de concentração.<br>1, 2, 3 e já!</div>
+                </div>
+            </dialog>
         </section>
     </main>
 
@@ -101,6 +111,7 @@
 <script src="../js/redirector.js"></script>
 <script src="../js/cronometro.js"></script>
 <script src="../js/onloadPerfil.js"></script>
+<script src="../js/openClose.js"></script>
 
 <script>
     function salvarSessao() {

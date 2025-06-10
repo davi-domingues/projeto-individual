@@ -140,6 +140,15 @@
                     </div>
                 </div>
             </div>
+            <div class="help-tag" onclick="abrirModal(diario_help)">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <dialog id="diario_help">
+                <div>
+                    <i class="fa-solid fa-circle-xmark icon close-button" onclick="fecharModal(diario_help)"></i>
+                    <div class="frase-help">Aqui você pode registrar um novo livro que queira começar a ler ou registrar a leitura que você já fez de algum livro! <br> As informações dos seus livros e leituras são somente suas. <br> Não se esqueça de sempre fazer um comentário interessante, não basta ler precisa saber!</div>
+                </div>
+            </dialog>
         </section>
     </main>
 
@@ -156,6 +165,7 @@
 
 <script src="../js/redirector.js"></script>
 <script src="../js/onloadPerfil.js"></script>
+<script src="../js/openClose.js"></script>
 
 <script>
     function cadastrarLivro() {

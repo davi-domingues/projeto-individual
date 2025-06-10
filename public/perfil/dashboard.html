@@ -120,6 +120,15 @@
                     </div>
                 </div>
             </div>
+            <div class="help-tag" onclick="abrirModal(dashboard_help)">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <dialog id="dashboard_help">
+                <div>
+                    <i class="fa-solid fa-circle-xmark icon close-button" onclick="fecharModal(dashboard_help)"></i>
+                    <div class="frase-help">Conforme você utiliza as ferramentas do site suas métricas aparecerão aqui!<br>Dica: quanto mais você lê mais você pontua. Tente ser o leitor número 1!</div>
+                </div>
+            </dialog>
         </section>
     </main>
 
@@ -136,6 +145,7 @@
 
 <script src="../js/redirector.js"></script>
 <script src="../js/onloadPerfil.js"></script>
+<script src="../js/openClose.js"></script>
 
 <script>
     function habilitar(idElement) {

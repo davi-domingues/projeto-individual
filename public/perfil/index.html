@@ -99,6 +99,15 @@
                     </div>
                 </div>
             </div>
+            <div class="help-tag" onclick="abrirModal(index_help)">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <dialog id="index_help">
+                <div>
+                    <i class="fa-solid fa-circle-xmark icon close-button" onclick="fecharModal(index_help)"></i>
+                    <div class="frase-help">Utiliza essa página para navegar pelas funcionalidades do site. Lembre-se: todas suas ações nas ferramentas te dão uma pontuação!</div>
+                </div>
+            </dialog>
         </section>
     </main>
 
@@ -115,6 +124,7 @@
 
 <script src="../js/redirector.js"></script>
 <script src="../js/onloadPerfil.js"></script>
+<script src="../js/openClose.js"></script>
 
 <script>
     const diarioCard = document.getElementById('diarioCard');

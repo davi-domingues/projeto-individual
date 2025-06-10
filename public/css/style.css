@@ -118,6 +118,7 @@ h1, h2, h3 {
     transition: 0.3s;
     padding: 5rem 20rem;
     color: var(--marrom_café);
+    cursor: pointer;
     a{
         color: var(--marrom_café);
         text-decoration: none;
@@ -640,6 +641,39 @@ h1 {
     }
 }
 
+.help-tag {
+    position: absolute;
+    right: 1vh;
+    top: 1vh;
+    cursor: pointer;
+}
+
+dialog {
+    background-color: var(--bege_claro);
+    color: var(--caramelo);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+    div {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+    .frase-help {
+
+        height: 80%;
+        width: 80%;
+        color: var(--marrom_café);
+    }
+    .close-button {
+        position: absolute;
+        top: 5%;
+        right: 1%;
+        cursor: pointer;
+    }
+}
 
 .footer {
     width: 100%;
