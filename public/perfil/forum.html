@@ -384,16 +384,21 @@
                 if (resposta.status == 200) {
                     resposta.json().then((comentarios) => {
                         comentarios.forEach((comentario) => {
+                            const id = comentario.idComentario;
                             let dataFormatada = new Date(comentario.dtPostagem);
                             dataFormatada = dataFormatada.toLocaleDateString('pt-BR');
                             let div = lista_comentarios.appendChild(document.createElement("div"));
                             div.classList.add("forum");
                             let conteudo = div.appendChild(document.createElement("div"));
                             conteudo.textContent = `${comentario.comentario} - (Publicado: ${dataFormatada})`
+                            // conteudo.innerHTML += `<br>
+                            // ${comentario.curtidas}<i id="like_vazio${id}" class="fa-regular fa-thumbs-up" style="display: flex" onclick="atualizarCurtida(${id}, 'like', 'curtir')"></i>
+                            // <i id="like_cheio${id}" class="fa-solid fa-thumbs-up" style="display: none" onclick="atualizarCurtida(${id}, 'like', 'descurtir')"></i>
+                            // `
                             if (sessionStorage.ID_USUARIO == comentario.idUsuario) {
                                 div.innerHTML += `
-                                <i class="fa-solid fa-trash-can icon" onclick="removerComentario(${comentario.idComentario})"></i>
-                                <i class="fa-solid fa-pen-to-square icon" onclick="abrirEditor(${comentario.idComentario}, '${comentario.comentario}')"></i>
+                                <i class="fa-solid fa-trash-can icon" onclick="removerComentario(${id})"></i>
+                                <i class="fa-solid fa-pen-to-square icon" onclick="abrirEditor(${id}, '${comentario.comentario}')"></i>
                                 `
                             }
                         })
@@ -410,5 +415,37 @@
         sessionStorage.removeItem('TOPICO_ATUAL');
         desabilitar(pagina_comentario);
         habilitar(pagina_topicos);
+    };
+
+    function atualizarCurtida(id, button, acao) {
+        if (acao == 'curtir') {
+            desabilitar(document.getElementById(`${button}_vazio${id}`));
+            habilitar(document.getElementById(`${button}_cheio${id}`));
+        };
+        if (acao == 'descurtir') {
+            desabilitar(document.getElementById(`${button}_cheio${id}`));
+            habilitar(document.getElementById(`${button}_vazio${id}`));
+        };
+
+        const idUsuario = sessionStorage.ID_USUARIO;
+        const idForum = sessionStorage.TOPICO_ATUAL;
+        const idComentario = id;
+
+        fetch(`/forum/atualizarCurtidas/${idUsuario}/${idForum}/${idComentario}/${acao}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                listarComentarios(idForum);
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw (resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
     };
 </script>

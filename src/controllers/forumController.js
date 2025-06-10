@@ -107,6 +107,10 @@ function excluirComentario(req, res) {
     const idUsuario = req.params.idUsuario;
     const idForum = req.params.idForum;
 
+    idForum == undefined ? res.status(400).send("idForum está undefined") :
+    idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
+    idComentario == undefined ? res.status(400).send("idComentario está undefined") :
+
     forumModel.excluirComentario(idComentario, idUsuario, idForum)
         .then(
             function (resultado) {
@@ -128,6 +132,11 @@ function editarComentario(req, res) {
     const idForum = req.params.idForum;
     const comentario = req.body.comentarioServer;
 
+    idForum == undefined ? res.status(400).send("idForum está undefined") :
+    idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
+    idComentario == undefined ? res.status(400).send("idComentario está undefined") :
+    comentario == undefined ? res.status(400).send("comentario está undefined") :
+
     forumModel.editarComentario(idComentario, idUsuario, idForum, comentario)
         .then(
             function (resultado) {
@@ -144,7 +153,29 @@ function editarComentario(req, res) {
 };
 
 function atualizarCurtidas(req, res) {
-    forumModel.atualizarCurtidas(idComentario, idUsuario, idForum, acao).then().catch();
+    const idUsuario = req.params.idUsuario;
+    const idForum = req.params.idForum;
+    const idComentario = req.params.idComentario;
+    const acao = req.params.acao;
+
+    idForum == undefined ? res.status(400).send("idForum está undefined") :
+    idUsuario == undefined ? res.status(400).send("idUsuario está undefined") :
+    idComentario == undefined ? res.status(400).send("idComentario está undefined") :
+    acao == undefined ? res.status(400).send("acao está undefined") :
+
+    forumModel.atualizarCurtidas(idComentario, idUsuario, idForum, acao)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 };
 
 module.exports = {
