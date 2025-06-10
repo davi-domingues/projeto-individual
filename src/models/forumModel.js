@@ -4,7 +4,7 @@ function listarForuns() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():");
 
     var instrucaoSql = `
-        SELECT * FROM vw_forum
+        SELECT * FROM vw_forum AS f JOIN vw_usuario AS u ON f.idUsuario = u.id
     `;
     
     console.log("Executando a instrução SQL: \n", instrucaoSql);
@@ -37,7 +37,7 @@ function listarComentarios(idForum) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function funcao():", idForum);
 
     var instrucaoSql = `
-        SELECT * FROM vw_comentario WHERE idForum = ${idForum}
+        SELECT * FROM vw_comentario AS c JOIN vw_usuario AS u ON c.idUsuario = u.id JOIN vw_forum AS f ON c.idForum = f.idForum WHERE c.idForum = ${idForum} 
     `;
 
     console.log("Executando a instrução SQL: \n", instrucaoSql);
