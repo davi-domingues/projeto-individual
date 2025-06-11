@@ -21,6 +21,7 @@ var diarioRouter = require("./src/routes/diario");
 var sessaoRouter = require("./src/routes/sessao");
 var dashboardRouter = require("./src/routes/dashboard");
 var forumRouter = require("./src/routes/forum");
+var configRouter = require("./src/routes/config");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use("/diario", diarioRouter);
 app.use("/sessao", sessaoRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/forum", forumRouter);
+app.use("/config", configRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

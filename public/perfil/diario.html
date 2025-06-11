@@ -36,6 +36,7 @@
                             <h3 id="nomeSession">Nome</h3>
                             <span id="emailSession">email@email.com</span>
                             <span id="usernameSession">user_name</span>
+                            <i class="fa-solid fa-gear config" onclick="abrirModal(modal_config)"></i>
                         </div>
                     </div>
                 </div>
@@ -150,6 +151,26 @@
                 </div>
             </dialog>
         </section>
+        <dialog id="modal_config">
+            <div class="options-main flex">
+                <i class="fa-solid fa-circle-xmark icon close-button" onclick="fecharModal(modal_config)"></i>
+                <h3>Opções</h3>
+                <div class="button-container">
+                    <button onclick="confirmarExecucao('reiniciarConta()')">Reiniciar conta</button>
+                    <button onclick="confirmarExecucao('deletarConta()')">Deletar conta</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog id="modal_confirma">
+            <div>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="text-aviso">Você tem certeza que quer continuar com essa ação?</span>
+                <span class="button-container">
+                    <button id="button_confirma">Confirmar</button>
+                    <button onclick="fecharModal(modal_confirma)">Cancelar</button>
+                </span>
+            </div>
+        </dialog>
     </main>
 
     <footer class="footer flex">
@@ -166,6 +187,7 @@
 <script src="../js/redirector.js"></script>
 <script src="../js/onloadPerfil.js"></script>
 <script src="../js/openClose.js"></script>
+<script src="../js/settings.js"></script>
 
 <script>
     function cadastrarLivro() {

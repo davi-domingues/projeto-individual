@@ -11,3 +11,8 @@ function abrirModal(idElement) {
 function fecharModal(idElement) {
     idElement.close();
 };
+
+function confirmarExecucao(funcao) {
+    abrirModal(modal_confirma)
+    button_confirma.setAttribute("onclick", `${funcao}`) 
+};

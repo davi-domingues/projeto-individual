@@ -188,4 +188,26 @@ CREATE PROCEDURE atualizar_curtidas(idComentario INT, idUsuario INT, idForum INT
 	END$$
 DELIMITER ;
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS reiniciar_dados;
+CREATE PROCEDURE reiniciar_dados(idUsuario INT)
+	BEGIN
+		DELETE FROM tb_leitura_diario WHERE at_fk_idUsuario = idUsuario AND at_fk_idLivro > 0 AND at_idLeitura > 0;
+        DELETE FROM tb_livro_individual WHERE at_fk_idUsuario = idUsuario AND at_idLivro > 0;
+        DELETE FROM tb_streak_usuario WHERE at_fk_idUsuario = idUsuario AND at_idStreak > 0;
+        DELETE FROM tb_pontuacao_usuario WHERE at_fk_idUsuario = idUsuario AND at_idPontuacao > 0;
+        DELETE FROM tb_sessao_concentracao WHERE at_fk_idUsuario = idUsuario AND at_idSessao > 0;
+        DELETE FROM tb_comentario_forum WHERE at_fk_idUsuario = idUsuario AND at_fk_idForum > 0 AND at_idComentario > 0;
+        DELETE FROM tb_forum_interacao WHERE at_fk_idUsuario = idUsuario AND at_idForum > 0;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS deletar_conta;
+CREATE PROCEDURE deletar_conta(idUsuario INT)
+	BEGIN
+		DELETE FROM tb_usuario_leitor WHERE at_idUsuario = idUsuario;
+	END$$
+DELIMITER ;
+
 

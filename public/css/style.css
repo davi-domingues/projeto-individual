@@ -396,13 +396,14 @@ h1 {
                     height: 100%;
                     flex-direction: column;
                     align-items: flex-start;
-                    justify-content: center
+                    justify-content: center;
+                    .config {
+                        font-size: 12rem;
+                        align-self: flex-end;
+                        cursor: pointer;
+                    }
                 }
             };
-            .config {
-                height: 100%;
-                align-content: flex-end;
-            }
         }
         .toolsList {
             font-size: 13rem;
@@ -444,6 +445,7 @@ h1 {
         height: 100vh;
         width: 85%;
         .title {
+            text-align: center;
             width: 100%;
             height: 10%;
         }
@@ -825,6 +827,23 @@ dialog {
         justify-content: space-between;
         align-items: center;
     };
+    button {
+        font-size: 10rem;
+    }
+}
+
+#modal_config {
+    width: 20%;
+    height: 13%;
+    .options-main {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between
+    };
+    .button-container {
+        flex-direction: row;
+    }
     button {
         font-size: 10rem;
     }
