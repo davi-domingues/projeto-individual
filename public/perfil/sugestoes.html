@@ -139,6 +139,10 @@
     async function gerarResposta() {
         const pergunta = document.getElementById('ipt_pedido').value;
         
+        if (pergunta = '') {
+            alert('Peça um tema ou genêro antes de chamar o Bob')
+        };
+
         const response = await fetch('/perguntar', {
             method: 'POST',
             headers: {
@@ -149,7 +153,6 @@
 
         const data = await response.json();
 
-        alert(data.resultado)
         box_resposta.style.display = 'flex';
         document.getElementById('respostaIA').innerText = `BobIA responde: ${data.resultado}`;
         ipt_pedido.value = '';

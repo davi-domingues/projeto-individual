@@ -228,7 +228,7 @@
             console.log(resposta.body);
 
             if (resposta.ok) {
-                alert('Cadastrado com sucesso!');
+                alert('Tópico iniciado com sucesso!');
                 atualizarFeed();
                 form_topico.submit();
                 ipt_topico.value = '';
@@ -279,7 +279,7 @@
             console.log(resposta.body);
 
             if (resposta.ok) {
-                alert('Cadastrado com sucesso!');
+                alert('Comentario postado com sucesso!');
                 listarComentarios(sessionStorage.TOPICO_ATUAL)
                 form_novoComentario.submit();
                 ipt_novoComentario.value = '';
@@ -348,7 +348,7 @@
             }
         }).then(function (resposta) {
             if (resposta.ok) {
-                window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                window.alert("Post deletado com sucesso!");
                 atualizarFeed();
             } else if (resposta.status == 404) {
                 window.alert("Deu 404!");
@@ -373,7 +373,7 @@
             }
         }).then(function (resposta) {
             if (resposta.ok) {
-                window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                window.alert("Post deletado com sucesso!");
                 listarComentarios(idForum);
             } else if (resposta.status == 404) {
                 window.alert("Deu 404!");
@@ -409,7 +409,7 @@
             })
         }).then(function (resposta) {
             if (resposta.ok) {
-                window.alert("Post editado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+                window.alert("Post editado com sucesso!");
                 btn_editarComentario.setAttribute("onclick", '');
                 ipt_editComentario.value = '';
                 listarComentarios(idForum);

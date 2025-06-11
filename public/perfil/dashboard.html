@@ -28,7 +28,6 @@
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
-                    <!-- <div id="perfilSession"></div> -->
                     <div class="user flex">
                         <div class="icon flex">
                             <i class="fa-solid fa-user icone"></i>
@@ -227,7 +226,7 @@
         .then((resposta) => {
             console.log(resposta)
             if (resposta.status == 204) {
-                streak.innerHTML = 's/ registro'
+                streak.innerHTML = 'Você ainda não começou suas leituras'
             };
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
@@ -251,7 +250,7 @@
                         ${diaOUdias} sem ler nada :(
                         `;
                     } else {
-                        streak.innerHTML = `s/ registro`;
+                        streak.innerHTML = `Você ainda não começou suas leituras`;
                     };
 
                 })
@@ -265,7 +264,7 @@
         .then((resposta) => {
             console.log(resposta)
             if (resposta.status == 204) {
-                tempo_recorde.innerHTML = 's/ registro'
+                tempo_recorde.innerHTML = 'Sem registro'
             };
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
@@ -282,7 +281,7 @@
         .then((resposta) => {
             console.log(resposta)
             if (resposta.status == 204) {
-                livros_concluidos.innerHTML = 's/ registro'
+                livros_concluidos.innerHTML = 'Sem registro'
             };
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
@@ -316,7 +315,7 @@
         .then((resposta) => {
             console.log(resposta)
             if (resposta.status == 204) {
-                ranking.innerHTML = 's/ registro'
+                ranking.innerHTML = 'Sem registros'
             };
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
@@ -339,7 +338,7 @@
         .then((resposta) => {
             console.log(resposta)
             if (resposta.status == 204) {
-                ultimo_livro.innerHTML = 's/ registro'
+                ultimo_livro.innerHTML = 'Você ainda não começou suas leituras'
             };
             if (resposta.status == 200) {
                 resposta.json().then((json) => {
