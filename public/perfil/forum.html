@@ -61,9 +61,9 @@
                         <i class="fa-solid fa-clock icone"></i>
                         <h3>Sessão de Concentração</h3>
                     </div>
-                    <div id="configLink" class="link-button flex">
-                        <i class="fa-solid fa-gear icone"></i>
-                        <h3>Configurações</h3>
+                    <div id="sugestoesLink" class="link-button flex">
+                        <i class="fa-solid fa-robot icone"></i>
+                        <h3>Sugestões</h3>
                     </div>
                 </div>
                 <div class="options flex">
@@ -170,7 +170,7 @@
                 </div>
             </div>
         </dialog>
-        <dialog id="modal_confirma">
+        <!-- <dialog id="modal_confirma">
             <div>
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <span id="text-aviso">Você tem certeza que quer continuar com essa ação?</span>
@@ -179,7 +179,7 @@
                     <button onclick="fecharModal(modal_confirma)">Cancelar</button>
                 </span>
             </div>
-        </dialog>
+        </dialog> -->
     </main>
 
     <footer class="footer flex">
@@ -395,8 +395,6 @@
     }
 
     function editarComentario(idComentario) {
-        fecharModal(modal_confirma);
-
         const idUsuario = sessionStorage.ID_USUARIO;
         const idForum = sessionStorage.TOPICO_ATUAL;
         const comentario = ipt_editComentario.value
