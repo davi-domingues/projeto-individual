@@ -82,39 +82,55 @@
                         <div class="left-box">
                             <div class="kpis flex">
                                 <div class="kpi-box1">
-                                    <h4>streak dias</h4>
-                                    <span id="streak"></span>
+                                    <div class="modulo">
+                                        <h4>Streak</h4>
+                                        <span id="streak"></span>
+                                    </div>
                                 </div>
                                 <div class="kpi-box1">
-                                    <h4>ultimo livro</h4>
-                                    <span id="ultimo_livro"></span>
+                                    <div class="modulo">
+                                        <h4>Último Livro Lido</h4>
+                                        <span id="ultimo_livro"></span>
+                                    </div>
                                 </div>
                                 <div class="kpi-box1">
                                     <div class="kpi-box2">
-                                        <span>Tempo Recorde:</span>
-                                        <span id="tempo_recorde"></span>
+                                        <div class="modulo">
+                                            <span>Tempo recorde:  <span id="tempo_recorde"></span></span>
+                                            
+                                        </div>
                                     </div>
                                     <div class="kpi-box2">
-                                        <span>Livros Concluídos:</span>
-                                        <span id="livros_concluidos"></span>
+                                        <div class="modulo">
+                                            <span>Livros concluídos:  <span id="livros_concluidos"></span></span>
+                                            
+                                        </div>
                                     </div>
                                     <div class="kpi-box2">
-                                        <span>Seu ranking:</span><br>
-                                        <span id="ranking_usuario"></span>
+                                        <div class="modulo">
+                                            <span>Seu ranking:  <span id="ranking_usuario"></span></span>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="line-chart" id="graficoLinha">
-                                <canvas id="myChartCanvas-Linha"></canvas>
+                                <div class="modulo">
+                                    <canvas id="myChartCanvas-Linha"></canvas>
+                                </div>
                             </div>
                         </div>
                         <div class="right-box">
-                            <button onclick="mostrarRanking()">Ranking</button>
-                            <button onclick="mostrarPodium()">Podium</button>
-                            <div class="content" style="display: none;" id="podium">
-                                <canvas id="myChartCanvas-Podium">podium</canvas>
+                            <div class="button-container">
+                                <button id="button_ranking" onclick="mostrarRanking()">Ranking</button>
+                                <button id="button_podium" onclick="mostrarPodium()">Podium</button>
                             </div>
-                            <div class="content" style="display: block;" id="ranking">
+                            <div class="modulo">
+                                <div class="content" style="display: none;" id="podium">
+                                    <canvas id="myChartCanvas-Podium">podium</canvas>
+                                </div>
+                                <div class="content" style="display: block;" id="ranking">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,15 +170,30 @@
     function desabilitar(idElement) {
         idElement.style.display = 'none'
     };
-
+    
     function mostrarRanking() {
         habilitar(ranking);
         desabilitar(podium);
+
+        button_ranking.style.color = 'var(--marrom_café)'
+        button_ranking.style.backgroundColor = 'var(--caramelo)'
+        button_ranking.style.borderColor = 'var(--caramelo)'
+
+        button_podium.style.color = 'var(--caramelo)'
+        button_podium.style.backgroundColor = 'var(--marrom_claro)'
+        button_podium.style.borderColor = 'var(--marrom_café)'
     };
     function mostrarPodium() {
         habilitar(podium);
-        desabilitar(ranking);
-        
+        desabilitar(ranking);  
+
+        button_podium.style.color = 'var(--marrom_café)'
+        button_podium.style.backgroundColor = 'var(--caramelo)'
+        button_podium.style.borderColor = 'var(--caramelo)'
+
+        button_ranking.style.color = 'var(--caramelo)'
+        button_ranking.style.backgroundColor = 'var(--marrom_claro)'
+        button_ranking.style.borderColor = 'var(--marrom_café)'
     };
 </script>
 
@@ -182,10 +213,21 @@
                     const streakPositivo = json[0][0].streakPositivo;
                     const streakNegativo = json[0][0].streakNegativo;
 
+                    var diaOUdias;
                     if (streakPositivo > streakNegativo) {
-                        streak.innerHTML = `Você está a  ${streakPositivo} dia(s) lendo!`;
+                        streakPositivo == 1 ? diaOUdias = 'Dia': diaOUdias = 'Dias'
+                        streak.innerHTML = `
+                        <strong style="font-size: 40rem">${streakPositivo}</strong>
+                        <br>
+                        ${diaOUdias} de leitura consecutiva!
+                        `;
                     } else if (streakPositivo < streakNegativo) {
-                        streak.innerHTML = `Você está a  ${streakNegativo} dia(s) sem ler :(`;
+                        streakNegativo == 1 ? diaOUdias = 'Dia': diaOUdias = 'Dias'
+                        streak.innerHTML = `
+                        <strong style="font-size: 40rem">${streakNegativo}</strong>
+                        <br>
+                        ${diaOUdias} sem ler nada :(
+                        `;
                     } else {
                         streak.innerHTML = `s/ registro`;
                     };
@@ -259,7 +301,9 @@
                     console.log(json)
                     json.forEach((user) => {
                         const div = ranking.appendChild(document.createElement("div"));
-                        div.innerHTML = `#${user.ranking} @${user.username} (${user.pontos} pontos)`
+                        user.username == sessionStorage.USERNAME_USUARIO ?
+                        div.innerHTML = `<strong>#${user.ranking} @${user.username} (${user.pontos} pontos)</strong>`:
+                        div.innerHTML = `#${user.ranking} @${user.username} (${user.pontos} pontos)`;
                     });
                     plotarPodium(json);
                 })
@@ -281,7 +325,7 @@
                     ultimo_livro.innerHTML = `
                         Nome: ${json[0].nome} <br>
                         Autor: ${json[0].autor} <br>
-                        Porcentagem: ${json[0].porcentagemLida}
+                        ${json[0].porcentagemLida} lido
                     `;
                 })
             }
@@ -334,16 +378,16 @@
         let dados = {
             labels: labels,
             datasets: [{
-                label: 'Páginas lidas x Dia',
+                label: 'Total de páginas lidas por dia',
                 data: [],
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(166, 124, 82)',
                 tension: 0.1
             }]
         };
 
         console.log(resposta)
-        for (i = 0; i < resposta.length; i++) {
+        for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
             var dataFormatada = registro.data.split('T');
             dataFormatada = dataFormatada[0].split('-');
@@ -370,7 +414,8 @@
                 label: 'Pontos',
                 data: [resposta[1].pontos, resposta[0].pontos, resposta[2].pontos],
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: ['rgba(192, 192, 192, 0.5)', 'rgba(255, 215, 0, 0.5)', 'rgba(205, 127, 50, 0.5)'],
+                borderColor: 'rgb(0, 0, 0)',
                 tension: 0.1
             }]
         };
