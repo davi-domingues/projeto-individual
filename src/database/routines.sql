@@ -209,5 +209,3 @@ CREATE PROCEDURE deletar_conta(idUsuario INT)
 		DELETE FROM tb_usuario_leitor WHERE at_idUsuario = idUsuario;
 	END$$
 DELIMITER ;
-
-

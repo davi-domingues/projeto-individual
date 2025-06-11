@@ -1,6 +1,12 @@
 function reiniciarConta() {
     const idUsuario = sessionStorage.ID_USUARIO;
-    alert(idUsuario)
+
+    if (idUsuario == undefined) {
+        alert('Erro na sessão, logue-se novamente');
+        window.location.href = '/'
+        return false;
+    };
+
     fetch(`/config/reiniciarConta/${idUsuario}`, {
         method: "DELETE",
         headers: {
@@ -8,8 +14,8 @@ function reiniciarConta() {
         }
     }).then(function (resposta) {
         if (resposta.ok) {
-            window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            listarComentarios(idForum);
+            window.alert("Conta reiniciada com sucesso!");
+            window.location.reload();
         } else if (resposta.status == 404) {
             window.alert("Deu 404!");
         } else {
@@ -23,7 +29,13 @@ function reiniciarConta() {
 
 function deletarConta() {
     const idUsuario = sessionStorage.ID_USUARIO;
-    alert(idUsuario)
+
+    if (idUsuario == undefined) {
+        alert('Erro na sessão, logue-se novamente');
+        window.location.href = '/'
+        return false;
+    };
+
     fetch(`/config/deletarConta/${idUsuario}`, {
         method: "DELETE",
         headers: {
@@ -31,8 +43,8 @@ function deletarConta() {
         }
     }).then(function (resposta) {
         if (resposta.ok) {
-            window.alert("Post deletado com sucesso pelo usuario de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            listarComentarios(idForum);
+            window.alert("Sua conta foi deletada com sucesso! Te esperamos numa próxima");
+            window.location.href = "../index.html"
         } else if (resposta.status == 404) {
             window.alert("Deu 404!");
         } else {
