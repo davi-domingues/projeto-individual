@@ -15,7 +15,7 @@ const infoList = {
         "Desenvolve empatia 🌱"        
     ],
     texto: [
-        "Conheça os benefícios de colocar a leitura no seu dia a dia -> ",
+        "Conheça os benefícios de colocar a leitura no seu dia a dia",
         "A leitura fortalece o foco, a concentração e melhora a memória. É um treino diário para sua mente.",
         "Quanto mais você lê, mais palavras novas conhece. Isso melhora a comunicação e a escrita.",
         "Mergulhar em um bom livro é uma forma eficaz de relaxar e esquecer das pressões do dia a dia.",
