@@ -10,6 +10,8 @@ function iniciarSessao() {
         button_controle.setAttribute('onclick', 'pausarSessao()');
         button_controle.innerHTML = '&#9208;';
         sessao = true;
+        livro_animado.style.display = 'block'
+        desabilitar(livro_estatico);
     };
 };
 
@@ -18,6 +20,8 @@ function pausarSessao() {
     button_controle.setAttribute('onclick', 'iniciarSessao()');
     button_controle.innerHTML = '&#11208;';
     sessao = false
+    livro_estatico.style.display = 'block'
+    desabilitar(livro_animado);
 };
 
 function timer() {

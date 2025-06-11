@@ -23,7 +23,7 @@
 
     </header>
 
-    <main>
+    <main class="sessao">
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
@@ -73,12 +73,17 @@
                 </div>
             </div>
             <div class="home flex">
-                <h1>Sessão de Concentração</h1>
-                <div>
-                    <h3><span id="cronometro_horas">00</span>:<span id="cronometro_minutos">00</span>:<span
-                            id="cronometro_segundos">00</span></h3>
+                <div class="title">
+                    <h1>Sessão de Concentração</h1>
                 </div>
-                <div>
+                <div class="main-cronometro flex">
+                    <img id="livro_animado" class="livro" src="../assets/iconlivro-animado.gif" alt="livro-animado" style="display: none;">
+                    <img id="livro_estatico" class="livro" src="../assets/iconslivro-estatico.png" alt="livro-estatico" style="display: block;">
+                    <div id="cronometro_total">
+                        <h3><span id="cronometro_horas">00</span>:<span id="cronometro_minutos">00</span>:<span id="cronometro_segundos">00</span></h3>
+                    </div>
+                </div>
+                <div class="button-container">
                     <button onclick="iniciarSessao()" id="button_controle">&#11208;</button>
                     <button onclick="reiniciarSessao()" id="button-reiniciar">Reiniciar</button>
                     <button onclick="salvarSessao()">Salvar</button>

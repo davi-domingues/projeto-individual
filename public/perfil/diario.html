@@ -82,13 +82,13 @@
                             <h3>
                                 Seus Livros
                             </h3>
-                            <div id="lista_livros" class="lista">Sem livros</div>
+                            <div id="lista_livros" class="lista flex scroll">Sem livros</div>
                         </div>
                         <div class="box flex" id="exibir_leituras">
                             <h3>
                                 Suas Leituras
                             </h3>
-                            <div id="lista_leituras" class="lista">Escolha um livro</div>
+                            <div id="lista_leituras" class="lista flex scroll">Escolha um livro</div>
                         </div>
                     </div>
                     <div class="buttons">
@@ -299,11 +299,22 @@
             if (resposta.status == 200) {
                 resposta.json().then((livros) => {
                     livros.forEach((livro) => {
+                      
                         const div = lista_livros.appendChild(document.createElement("div"));
-                        div.textContent = `${livro.nome} - ${livro.autor} (${livro.paginasTotal} páginas)`;
                         div.setAttribute("onclick", `listarLeituras(${livro.idLivro})`);
-                        div.id = `livro_${livro.idLivro}`
-                        div.classList.add("livro-listado")
+                        div.classList.add("item")
+
+                            let head = div.appendChild(document.createElement("div"));
+                            head.innerHTML = `<strong>${livro.autor}</strong>`;
+                            head.classList.add("head")
+                            
+                            let comentario = div.appendChild(document.createElement("div"));
+                            comentario.innerHTML = `${livro.nome}`;
+                            comentario.classList.add("comentario")
+                            
+                            let foot = div.appendChild(document.createElement("div"));
+                            foot.innerHTML = `${livro.paginasTotal}páginas`;
+                            foot.classList.add("foot")      
                     })
                 })
             }
@@ -327,13 +338,23 @@
                     resposta.json().then((leituras) => {
                         leituras.forEach((leitura) => {
                             const div = lista_leituras.appendChild(document.createElement("div"));
+                            div.classList.add("item")
                             
                             var dataFormatada = leitura.dtRegistro.split('T');
                             dataFormatada = dataFormatada[0].split('-');
                             dataFormatada = `${dataFormatada[2]}/${dataFormatada[1]}/${dataFormatada[0]}`;
-
-                            div.innerHTML = `<strong>(${dataFormatada}) Páginas: ${leitura.paginasLidas}</strong> <br> <strong>Comentario:</strong> <br> ${leitura.comentario}`;
-                            div.classList.add("leitura-listada")
+                            
+                            let head = div.appendChild(document.createElement("div"));
+                            head.innerHTML = `<strong>${dataFormatada}:</strong>`;
+                            head.classList.add("head")
+                            
+                            let comentario = div.appendChild(document.createElement("div"));
+                            comentario.innerHTML = `${leitura.comentario}`;
+                            comentario.classList.add("comentario")
+                            
+                            let foot = div.appendChild(document.createElement("div"));
+                            foot.innerHTML = `${leitura.paginasLidas} páginas lidas`;
+                            foot.classList.add("foot")       
                         })
                     })
                 }
