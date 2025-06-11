@@ -466,7 +466,7 @@
                             // ${comentario.curtidas}<i id="like_vazio${id}" class="fa-regular fa-thumbs-up" style="display: flex" onclick="atualizarCurtida(${id}, 'like', 'curtir')"></i>
                             // <i id="like_cheio${id}" class="fa-solid fa-thumbs-up" style="display: none" onclick="atualizarCurtida(${id}, 'like', 'descurtir')"></i>
                             // `
-                            if (sessionStorage.ID_USUARIO == comentario.idUsuario) {
+                            if (sessionStorage.ID_USUARIO == comentario.id) {
                                 foot.innerHTML += `
                                 <i class="fa-solid fa-trash-can icon" onclick="confirmarExecucao('removerComentario(${id})')"></i>
                                 <i class="fa-solid fa-pen-to-square icon" onclick="abrirEditor(${id}, '${comentario.comentario}')"></i>
