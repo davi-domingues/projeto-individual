@@ -29,7 +29,7 @@ function buscarTempoPorDia(idUsuario) {
 };
 
 function buscarPaginasPorDia(idUsuario) {
-    var instrucaoSql = `SELECT SUM(paginasLidas) AS somaPaginasLidas, DATE(dtRegistro) AS data FROM vw_leitura WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2`;
+    var instrucaoSql = `SELECT SUM(paginasLidas) AS somaPaginasLidas, DATE(dtRegistro) AS data FROM vw_leitura WHERE idUsuario = ${idUsuario} GROUP BY idUsuario, 2 ORDER BY 2`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
