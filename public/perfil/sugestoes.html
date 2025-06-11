@@ -23,7 +23,7 @@
 
     </header>
 
-    <main>
+    <main class="sugestoes">
         <section class="section flex">
             <div class="navbar flex">
                 <div class="profile flex">
@@ -78,6 +78,22 @@
                     <h1>Sugestões</h1>
                     <h3>Peça ao BobIA uma sugestão de livro</h3>
                 </div>
+                <div class="content flex">
+                    <div class="box-interacao flex">
+                        <div class="box-pedido flex">
+                            <h4><label for="ipt_pedido">Escolha um tema ou gênero:</label></h4>
+                            <textarea name="pedido" id="ipt_pedido" cols="35" rows="3" style="resize: none" maxlength="20"></textarea>
+                        </div>
+                        <div class="box-enviar flex" onclick="gerarResposta()">
+                            <span>Pedir</span>
+                            <i id="btn_pedir" class="fa-solid fa-paper-plane icon"></i>
+                        </div>
+                    </div>
+                    <div id="box_resposta" class="box-resposta" style="display: none;">
+                        <img src="../assets/bob_logo.png" alt="logo-bobia" id="bobia_logo">
+                        <span id="respostaIA" class="scroll"></span>
+                    </div>
+                </div>
             </div>
         </section>
         <dialog id="modal_config">
@@ -117,3 +133,25 @@
 <script src="../js/onloadPerfil.js"></script>
 <script src="../js/openClose.js"></script>
 <script src="../js/settings.js"></script>
+
+<script>
+
+    async function gerarResposta() {
+        const pergunta = document.getElementById('ipt_pedido').value;
+        
+        const response = await fetch('/perguntar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ pergunta })
+        });
+
+        const data = await response.json();
+
+        alert(data.resultado)
+        box_resposta.style.display = 'flex';
+        document.getElementById('respostaIA').innerText = `BobIA responde: ${data.resultado}`;
+        ipt_pedido.value = '';
+    }
+</script>

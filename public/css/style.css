@@ -782,6 +782,58 @@ h1 {
                 cursor: pointer;
             }
         }
+    };
+    .sugestoes {
+        .content {
+            width: 100%;
+            height: 90%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .box-interacao {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 50%;
+                height: 50%;
+                .box-pedido {
+                    text-align: center;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                };
+                .box-enviar {
+                    cursor: pointer;
+                    justify-content: right;
+                    align-items: center;
+                    .icon {
+                        margin-left: 3rem;
+                        font-size: 10rem;
+                    }
+                };
+            };
+            .box-resposta {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                margin: 2%;
+                padding: 2%;
+                border-radius: 20rem;
+                background-color: var(--creme_suave);
+                box-shadow: 4rem 4rem 0px 0px var(--caramelo);
+                #respostaIA {
+                    width: 100%;
+                    max-height: 80%;
+                }
+                #bobia_logo {
+                    right: 1vh;
+                    top: 1vh;
+                    cursor: pointer;
+                    height: 30rem;
+                    width: 30rem;
+                }
+            }       
+        }
     }
 }
 
