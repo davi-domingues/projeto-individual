@@ -1,5 +1,5 @@
 
-# {Ler&Saber} - Website sobre o hábito de leitura
+# 📖 {Ler&Saber} - Website sobre o hábito de leitura
 
 Este projeto propõe o desenvolvimento de um website interativo voltado ao incentivo do hábito da leitura, unindo elementos informativos, recursos de engajamento e funcionalidades sociais. A proposta surgiu a partir de uma motivação pessoal, com o objetivo de explorar a leitura como prática transformadora no cotidiano. Além de estar conectada à ODS 4 – Educação de Qualidade, ao expandir e melhorar as oportunidades de cultivar o hábito de leitura. 
 
