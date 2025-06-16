@@ -21,13 +21,13 @@ A aplicação foi construída utilizando tecnologias como HTML, CSS, JavaScript 
 Clone o projeto
 
 ```bash
-  git clone https://github.com/davi-domingues/projeto-ler_saber
+  git clone https://github.com/davi-domingues/projeto-lersaber
 ```
 
 Entre no diretório do projeto
 
 ```bash
-  cd projeto-ler_saber
+  cd projeto-lersaber
 ```
 
 Entre na pasta do database
@@ -68,7 +68,7 @@ Inicie a aplicação
  
 ## Screenshots
 
-![App Screenshot](https://https://github.com/davi-domingues/projeto-ler_saber)
+![App Screenshot](https://https://github.com/davi-domingues/projeto-lersaber)
 
 
 ## Autor
