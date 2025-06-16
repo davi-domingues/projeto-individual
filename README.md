@@ -69,16 +69,16 @@ Inicie a aplicação
 ## Screenshots
 
 ### Landingpage 🚀
-![App Screenshot Landingpage](https://https://github.com/davi-domingues/projeto-lersaber/public/assets/print-index.jpeg)
+![App Screenshot Landingpage](./public/assets/print-index.jpeg)
 
 ### Cadastro 📝
-![App Screenshot Cadastro](https://https://github.com/davi-domingues/projeto-lersaber/public/assets/print-cadastro.jpeg)
+![App Screenshot Cadastro](./public/assets/print-cadastro.jpeg)
 
 ### Login 🔑
-![App Screenshot Login](https://https://github.com/davi-domingues/projeto-lersaber/public/assets/print-login.jpeg)
+![App Screenshot Login](./public/assets/print-login.jpeg)
 
 ### Perfil 👤
-![App Screenshot Perfil](https://https://github.com/davi-domingues/projeto-lersaber/public/assets/print-perfil.jpeg)
+![App Screenshot Perfil](./public/assets/print-perfil.jpeg)
 
 ## Autor
 
